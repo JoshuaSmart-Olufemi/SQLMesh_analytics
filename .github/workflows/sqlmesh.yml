@@ -22,4 +22,10 @@ jobs:
         run: pip install "sqlmesh[web,postgres,github]"
 
       - name: Run SQLMesh plan
-        run: sqlmesh plan --no-prompts --skip-backfill --no-gaps --verbose
+        env:
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+        run: |
+          sqlmesh plan --no-prompts --skip-backfill --no-gaps --verbose
