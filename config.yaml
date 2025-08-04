@@ -2,39 +2,32 @@
 gateways:
   postgres:
     connection:
-      # For more information on configuring the connection to your execution engine, visit:
-      # https://sqlmesh.readthedocs.io/en/stable/reference/configuration/#connection
-      # https://sqlmesh.readthedocs.io/en/stable/integrations/engines/postgres/#connection-options
       type: postgres
-      host: "2xxaud.stackhero-network.com"
-      user: "admin"
-      password: "GUysEWwFsdX0W9rHJOsXY55SYAnfW346"
+      host: "${POSTGRES_HOST}"
+      user: "${POSTGRES_USER}"
+      password: "${POSTGRES_PASSWORD}"
       port: 5432
-      database: "test_db"
-      # concurrent_tasks: 4
-      # register_comments: True
-      # pre_ping: True
-      # pretty_sql: False
-      # keepalives_idle: 
-      # connect_timeout: 10
-      # role: 
-      # sslmode: 
-      # application_name: 
+      database: "${POSTGRES_DB}"
 
 default_gateway: postgres
 
-# --- Model Defaults ---
-# https://sqlmesh.readthedocs.io/en/stable/reference/model_configuration/#model-defaults
+# --- Environments ---
+# Define staging and prod schemas here
+environments:
+  staging:
+    gateway: postgres
+    schema: staging_${PR_NUMBER}    # 👈 The schema you created in Postgres
+  prod:
+    gateway: postgres
+    schema: public     # 👈 Your production schema
 
+# --- Model Defaults ---
 model_defaults:
   dialect: postgres
-  start: 2025-08-03 # Start date for backfill history
-  cron: '@daily'    # Run models daily at 12am UTC (can override per model)
+  start: 2025-08-03
+  cron: '@daily'
 
 # --- Linting Rules ---
-# Enforce standards for your team
-# https://sqlmesh.readthedocs.io/en/stable/guides/linter/
-
 linter:
   enabled: true
   rules:
