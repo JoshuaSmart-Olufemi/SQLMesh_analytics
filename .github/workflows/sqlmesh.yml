@@ -3,6 +3,7 @@ name: SQLMesh CI
 on:
   pull_request:
     branches: [ "main" ]
+    types: [opened, synchronize, reopened, closed]  # add closed for cleanup
   push:
     branches: [ "main" ]
 
@@ -36,31 +37,50 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; else pip install "sqlmesh[web,postgres,github]"; fi
 
       # ---------------------
-      # Validation on PRs (Staging)
+      # Validation on PRs (Dynamic Staging Schema)
       # ---------------------
-      - name: Run SQLMesh plan on Staging (PR validation)
-        if: github.event_name == 'pull_request'
+      - name: Run SQLMesh plan on Dynamic Staging
+        if: github.event_name == 'pull_request' && github.event.action != 'closed'
         env:
-          POSTGRES_HOST: ${{ secrets.STAGING_POSTGRES_HOST }}
-          POSTGRES_USER: ${{ secrets.STAGING_POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.STAGING_POSTGRES_PASSWORD }}
-          POSTGRES_DB: ${{ secrets.STAGING_POSTGRES_DB }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
-          sqlmesh plan --no-prompts --skip-backfill --no-gaps --verbose --create-pr-comment
+          sqlmesh plan --environment staging --no-prompts --skip-backfill --no-gaps --verbose --create-pr-comment
 
-      - name: Apply SQLMesh changes on Staging
-        if: github.event_name == 'pull_request'
+      - name: Apply SQLMesh changes on Dynamic Staging
+        if: github.event_name == 'pull_request' && github.event.action != 'closed'
         env:
-          POSTGRES_HOST: ${{ secrets.STAGING_POSTGRES_HOST }}
-          POSTGRES_USER: ${{ secrets.STAGING_POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.STAGING_POSTGRES_PASSWORD }}
-          POSTGRES_DB: ${{ secrets.STAGING_POSTGRES_DB }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
-          sqlmesh apply --no-prompts --skip-backfill --no-gaps --verbose
+          sqlmesh apply --environment staging --no-prompts --skip-backfill --no-gaps --verbose
 
-      - name: Run SQLMesh tests (Staging)
-        if: github.event_name == 'pull_request'
-        run: sqlmesh test --verbose
+      - name: Run SQLMesh tests (Dynamic Staging)
+        if: github.event_name == 'pull_request' && github.event.action != 'closed'
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: sqlmesh test --environment staging --verbose
+
+      # ---------------------
+      # Cleanup Staging Schema when PR is closed
+      # ---------------------
+      - name: Drop staging schema for closed PR
+        if: github.event_name == 'pull_request' && github.event.action == 'closed'
+        env:
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          psql "host=$POSTGRES_HOST dbname=$POSTGRES_DB user=$POSTGRES_USER password=$POSTGRES_PASSWORD" \
+          -c "DROP SCHEMA IF EXISTS staging_${PR_NUMBER} CASCADE;"
 
       # ---------------------
       # Deployment on merge to main (Production)
@@ -68,9 +88,10 @@ jobs:
       - name: Run SQLMesh apply on Production
         if: github.event_name == 'push' && github.ref == 'refs/heads/main' && success()
         env:
-          POSTGRES_HOST: ${{ secrets.PROD_POSTGRES_HOST }}
-          POSTGRES_USER: ${{ secrets.PROD_POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.PROD_POSTGRES_PASSWORD }}
-          POSTGRES_DB: ${{ secrets.PROD_POSTGRES_DB }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
         run: |
-          sqlmesh apply --no-prompts --skip-backfill --no-gaps --verbose
+          sqlmesh apply --environment prod --no-prompts --skip-backfill --no-gaps --verbose
+
