@@ -3,7 +3,7 @@ name: SQLMesh CI
 on:
   pull_request:
     branches: [ "main" ]
-    types: [opened, synchronize, reopened, closed]  # add closed for cleanup
+    types: [opened, synchronize, reopened, closed]  # include closed for cleanup
   push:
     branches: [ "main" ]
 
@@ -59,7 +59,7 @@ jobs:
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
         run: |
-          sqlmesh apply --environment staging --no-prompts --skip-backfill --no-gaps --verbose
+          sqlmesh run --environment staging --no-prompts --skip-backfill --no-gaps --verbose
 
       - name: Run SQLMesh tests (Dynamic Staging)
         if: github.event_name == 'pull_request' && github.event.action != 'closed'
@@ -85,7 +85,7 @@ jobs:
       # ---------------------
       # Deployment on merge to main (Production)
       # ---------------------
-      - name: Run SQLMesh apply on Production
+      - name: Run SQLMesh run on Production
         if: github.event_name == 'push' && github.ref == 'refs/heads/main' && success()
         env:
           POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
@@ -93,5 +93,4 @@ jobs:
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
           POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
         run: |
-          sqlmesh apply --environment prod --no-prompts --skip-backfill --no-gaps --verbose
-
+          sqlmesh run --environment prod --no-prompts --skip-backfill --no-gaps --verbose
