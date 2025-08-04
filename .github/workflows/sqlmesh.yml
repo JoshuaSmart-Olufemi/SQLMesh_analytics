@@ -36,7 +36,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           # Pin SQLMesh version to avoid breaking changes
-          pip install "sqlmesh[web,postgres,github]==0.33.4"
+          pip install "sqlmesh[web,postgres,github]>=0.50.0,<0.60.0"
 
       # ---------------------
       # Validation on PRs (Dynamic Staging Schema)
