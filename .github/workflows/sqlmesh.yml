@@ -9,23 +9,68 @@ on:
 jobs:
   sqlmesh:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10"]
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Set up Python
+      - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
-          python-version: "3.10"
+          python-version: ${{ matrix.python-version }}
 
-      - name: Install SQLMesh
-        run: pip install "sqlmesh[web,postgres,github]"
+      - name: Cache pip dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
 
-      - name: Run SQLMesh plan
-        env:
-          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+      - name: Install dependencies
         run: |
-          sqlmesh plan --no-prompts --skip-backfill --no-gaps --verbose
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; else pip install "sqlmesh[web,postgres,github]"; fi
+
+      # ---------------------
+      # Validation on PRs (Staging)
+      # ---------------------
+      - name: Run SQLMesh plan on Staging (PR validation)
+        if: github.event_name == 'pull_request'
+        env:
+          POSTGRES_HOST: ${{ secrets.STAGING_POSTGRES_HOST }}
+          POSTGRES_USER: ${{ secrets.STAGING_POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.STAGING_POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.STAGING_POSTGRES_DB }}
+        run: |
+          sqlmesh plan --no-prompts --skip-backfill --no-gaps --verbose --create-pr-comment
+
+      - name: Apply SQLMesh changes on Staging
+        if: github.event_name == 'pull_request'
+        env:
+          POSTGRES_HOST: ${{ secrets.STAGING_POSTGRES_HOST }}
+          POSTGRES_USER: ${{ secrets.STAGING_POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.STAGING_POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.STAGING_POSTGRES_DB }}
+        run: |
+          sqlmesh apply --no-prompts --skip-backfill --no-gaps --verbose
+
+      - name: Run SQLMesh tests (Staging)
+        if: github.event_name == 'pull_request'
+        run: sqlmesh test --verbose
+
+      # ---------------------
+      # Deployment on merge to main (Production)
+      # ---------------------
+      - name: Run SQLMesh apply on Production
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && success()
+        env:
+          POSTGRES_HOST: ${{ secrets.PROD_POSTGRES_HOST }}
+          POSTGRES_USER: ${{ secrets.PROD_POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.PROD_POSTGRES_PASSWORD }}
+          POSTGRES_DB: ${{ secrets.PROD_POSTGRES_DB }}
+        run: |
+          sqlmesh apply --no-prompts --skip-backfill --no-gaps --verbose
