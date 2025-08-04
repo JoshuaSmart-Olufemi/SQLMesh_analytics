@@ -3,33 +3,25 @@ gateways:
   postgres:
     connection:
       type: postgres
-      host: "${POSTGRES_HOST}"
-      user: "${POSTGRES_USER}"
-      password: "${POSTGRES_PASSWORD}"
+      host: ${POSTGRES_HOST}
+      user: ${POSTGRES_USER}
+      password: ${POSTGRES_PASSWORD}
       port: 5432
-      database: "${POSTGRES_DB}"
+      database: ${POSTGRES_DB}
 
 default_gateway: postgres
-
-# --- Environments ---
-# Define staging and prod schemas here
-environments:
-  staging:
-    gateway: postgres
-    schema: staging_${PR_NUMBER}    # 👈 The schema you created in Postgres
-  prod:
-    gateway: postgres
-    schema: public     # 👈 Your production schema
 
 # --- Model Defaults ---
 model_defaults:
   dialect: postgres
   start: 2025-08-03
   cron: '@daily'
-
+  
 # --- Linting Rules ---
-linter:
-  enabled: true
+lint:
   rules:
-    - ambiguousorinvalidcolumn
-    - invalidselectstarexpansion
+    - qualifytables
+    - avoidselectstarexpansion
+
+
+
