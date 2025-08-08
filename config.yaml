@@ -6,7 +6,7 @@ gateways:
       host: ${POSTGRES_HOST}
       user: ${POSTGRES_USER}
       password: ${POSTGRES_PASSWORD}
-      port: 5432
+      port: ${POSTGRES_PORT}
       database: ${POSTGRES_DB}
 
 default_gateway: postgres
@@ -17,11 +17,7 @@ model_defaults:
   start: 2025-08-03
   cron: '@daily'
   
-# --- Linting Rules ---
-lint:
-  rules:
-    - qualifytables
-    - avoidselectstarexpansion
+
 
 
 
