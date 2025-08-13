@@ -1,0 +1,6 @@
+2025-08-11 17:03:59,555 - MainThread - sqlmesh.core.state_sync.db.interval - INFO - Compacting 3 intervals for 3 snapshots (interval.py:128)
+2025-08-11 17:03:59,555 - MainThread - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."sqlmesh_example"."full_model": 1291504539> (interval.py:213)
+2025-08-11 17:03:59,556 - MainThread - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."sqlmesh_example"."incremental_model": 3025917805> (interval.py:213)
+2025-08-11 17:03:59,557 - MainThread - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."sqlmesh_example"."seed_model": 2262549535> (interval.py:213)
+2025-08-11 17:03:59,575 - MainThread - sqlmesh.core.state_sync.db.interval - INFO - Compacting 0 intervals for 0 snapshots (interval.py:128)
+2025-08-11 17:03:59,780 - MainThread - root - INFO - Shutting down the event dispatcher (dispatcher.py:159)

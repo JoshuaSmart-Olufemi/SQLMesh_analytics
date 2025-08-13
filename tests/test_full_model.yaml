@@ -1,7 +1,7 @@
 test_example_full_model:
-  model: analytics.full_model
+  model: sqlmesh_example.full_model
   inputs:
-    analytics.incremental_model:
+    sqlmesh_example.incremental_model:
       rows:
       - id: 1
         item_id: 1
