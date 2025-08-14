@@ -1,6 +1,12 @@
 MODEL (
     name staging.stg_events,
-    kind VIEW
+    kind VIEW,
+    cron '@hourly',
+    audits (
+    unique_values(columns := (event_id, user_id, event_date)),
+    not_null(columns := (event_id, user_id, event_date))
+  ),
+    grain event_id 
 );
 
 SELECT

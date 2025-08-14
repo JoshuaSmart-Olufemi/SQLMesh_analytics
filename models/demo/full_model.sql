@@ -3,7 +3,10 @@ MODEL (
   kind FULL,
   cron '@daily',
   grain item_id,
-  audits (assert_positive_order_ids),
+  audits (
+    assert_positive_order_ids(column := item_id),
+    not_null(column := item_id)
+    ),
 );
 
 SELECT
