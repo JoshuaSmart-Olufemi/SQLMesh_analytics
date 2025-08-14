@@ -1,0 +1,224 @@
+2025-08-14 14:48:19,914 - MainThread - sqlmesh.core.config.connection - INFO - Creating new DuckDB adapter for in-memory database (connection.py:483)
+2025-08-14 14:48:36,291 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage CreateSnapshotRecordsStage (evaluator.py:125)
+2025-08-14 14:48:36,323 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage PhysicalLayerUpdateStage (evaluator.py:125)
+2025-08-14 14:48:36,329 - ThreadPoolExecutor-1_0 - sqlmesh.core.snapshot.evaluator - INFO - Listing data objects in schema analytics.sqlmesh__analytics (evaluator.py:361)
+2025-08-14 14:48:36,329 - ThreadPoolExecutor-1_1 - sqlmesh.core.snapshot.evaluator - INFO - Listing data objects in schema analytics.sqlmesh__staging (evaluator.py:361)
+2025-08-14 14:48:36,330 - ThreadPoolExecutor-1_2 - sqlmesh.core.snapshot.evaluator - INFO - Listing data objects in schema analytics.sqlmesh__sqlmesh_example (evaluator.py:361)
+2025-08-14 14:48:36,330 - ThreadPoolExecutor-1_3 - sqlmesh.core.snapshot.evaluator - INFO - Listing data objects in schema analytics.sqlmesh__raw (evaluator.py:361)
+2025-08-14 14:48:36,379 - ThreadPoolExecutor-1_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ SELECT
+  current_catalog (base.py:2260)
+2025-08-14 14:48:36,427 - ThreadPoolExecutor-1_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ SELECT
+  current_catalog (base.py:2260)
+2025-08-14 14:48:36,475 - ThreadPoolExecutor-1_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ SELECT
+  current_catalog (base.py:2260)
+2025-08-14 14:48:36,526 - ThreadPoolExecutor-1_3 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ SELECT
+  current_catalog (base.py:2260)
+2025-08-14 14:48:36,574 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Creating schema 'analytics.sqlmesh__analytics' (evaluator.py:1180)
+2025-08-14 14:48:36,740 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ CREATE SCHEMA IF NOT EXISTS "sqlmesh__analytics" (base.py:2260)
+2025-08-14 14:48:36,742 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Creating schema 'analytics.sqlmesh__raw' (evaluator.py:1180)
+2025-08-14 14:48:36,743 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ CREATE SCHEMA IF NOT EXISTS "sqlmesh__raw" (base.py:2260)
+2025-08-14 14:48:36,745 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Creating schema 'analytics.sqlmesh__sqlmesh_example' (evaluator.py:1180)
+2025-08-14 14:48:36,746 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ CREATE SCHEMA IF NOT EXISTS "sqlmesh__sqlmesh_example" (base.py:2260)
+2025-08-14 14:48:36,748 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Creating schema 'analytics.sqlmesh__staging' (evaluator.py:1180)
+2025-08-14 14:48:36,750 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ CREATE SCHEMA IF NOT EXISTS "sqlmesh__staging" (base.py:2260)
+2025-08-14 14:48:36,815 - ThreadPoolExecutor-2_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ SELECT
+  1
+FROM "information_schema"."tables"
+WHERE
+  "table_name" = 'staging__stg_events__1053797422'
+  AND "table_schema" = 'sqlmesh__staging' (base.py:2260)
+2025-08-14 14:48:36,824 - ThreadPoolExecutor-2_0 - sqlmesh.core.snapshot.evaluator - INFO - Creating view 'analytics.sqlmesh__staging.staging__stg_events__1053797422' (evaluator.py:1983)
+2025-08-14 14:48:36,834 - ThreadPoolExecutor-2_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ CREATE VIEW "sqlmesh__staging"."staging__stg_events__1053797422" AS
+SELECT
+  "events"."event_id" AS "event_id",
+  "events"."user_id" AS "user_id",
+  "events"."event_type" AS "event_type",
+  "events"."event_timestamp" AS "event_timestamp",
+  CAST("events"."event_timestamp" AS DATE) AS "event_date",
+  "events"."revenue" AS "revenue"
+FROM "analytics"."sqlmesh__raw"."raw__events__561768720" AS "events"
+WHERE
+  NOT "events"."event_id" IS NULL (base.py:2260)
+2025-08-14 14:48:36,843 - ThreadPoolExecutor-2_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ COMMENT ON COLUMN "sqlmesh__staging"."staging__stg_events__1053797422"."event_date" IS 'Extract date for incremental processing' (base.py:2260)
+2025-08-14 14:48:36,930 - ThreadPoolExecutor-2_1 - sqlmesh.core.snapshot.evaluator - INFO - Creating table 'analytics.sqlmesh__analytics.analytics__daily_revenue__276492176' (evaluator.py:1542)
+2025-08-14 14:48:36,932 - ThreadPoolExecutor-2_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ CREATE TABLE IF NOT EXISTS "sqlmesh__analytics"."analytics__daily_revenue__276492176" (
+  "event_date" DATE,
+  "unique_users" BIGINT,
+  "total_revenue" DECIMAL(10, 2)
+) (base.py:2260)
+2025-08-14 14:48:36,939 - ThreadPoolExecutor-2_1 - sqlmesh.core.snapshot.evaluator - INFO - Dry running model 'analytics.daily_revenue' (evaluator.py:1564)
+2025-08-14 14:48:36,941 - ThreadPoolExecutor-2_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ SELECT
+  "stg_events"."event_date" AS "event_date",
+  COUNT(DISTINCT "stg_events"."user_id") AS "unique_users",
+  COALESCE(
+    SUM(CASE WHEN "stg_events"."event_type" = 'purchase' THEN "stg_events"."revenue" END),
+    0
+  ) AS "total_revenue"
+FROM "analytics"."sqlmesh__staging"."staging__stg_events__1053797422" AS "stg_events"
+WHERE
+  FALSE AND FALSE
+GROUP BY
+  "stg_events"."event_date"
+LIMIT 0 (base.py:2260)
+2025-08-14 14:48:36,950 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage BackfillStage (evaluator.py:125)
+2025-08-14 14:48:37,040 - ThreadPoolExecutor-3_0 - sqlmesh.core.snapshot.evaluator - INFO - Evaluating snapshot SnapshotId<"analytics"."staging"."stg_events": 2456517470> (evaluator.py:648)
+2025-08-14 14:48:37,111 - ThreadPoolExecutor-3_0 - sqlmesh.core.snapshot.evaluator - INFO - Inserting batch (2025-08-10 00:00:00, 2025-08-13 00:00:00) into analytics.sqlmesh__staging.staging__stg_events__1053797422' (evaluator.py:703)
+2025-08-14 14:48:37,113 - ThreadPoolExecutor-3_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ SELECT
+  1
+FROM "information_schema"."tables"
+WHERE
+  "table_name" = 'staging__stg_events__1053797422'
+  AND "table_schema" = 'sqlmesh__staging' (base.py:2260)
+2025-08-14 14:48:37,124 - ThreadPoolExecutor-3_0 - sqlmesh.core.snapshot.evaluator - INFO - Skipping creation of the view 'analytics.sqlmesh__staging.staging__stg_events__1053797422' (evaluator.py:1934)
+2025-08-14 14:48:37,126 - ThreadPoolExecutor-3_0 - sqlmesh.core.snapshot.evaluator - INFO - Auditing snapshot SnapshotId<"analytics"."staging"."stg_events": 2456517470> (evaluator.py:553)
+2025-08-14 14:48:37,131 - ThreadPoolExecutor-3_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0
+    AND NOT "attisdropped"
+    AND "relname" = 'staging__stg_events__1053797422'
+  )
+  AND "nspname" = 'sqlmesh__staging' (base.py:2260)
+2025-08-14 14:48:37,171 - ThreadPoolExecutor-3_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ SELECT
+  COUNT(*)
+FROM (
+  SELECT
+    *
+  FROM (
+    SELECT
+      ROW_NUMBER() OVER (PARTITION BY (
+        "event_id"
+      ) ORDER BY (
+        "event_id"
+      ) NULLS FIRST) AS "rank_"
+    FROM "analytics"."sqlmesh__staging"."staging__stg_events__1053797422" AS "staging__stg_events__1053797422"
+    WHERE
+      TRUE
+  ) AS "_q_0"
+  WHERE
+    "rank_" > 1
+) AS "audit" (base.py:2260)
+2025-08-14 14:48:37,202 - ThreadPoolExecutor-3_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0
+    AND NOT "attisdropped"
+    AND "relname" = 'staging__stg_events__1053797422'
+  )
+  AND "nspname" = 'sqlmesh__staging' (base.py:2260)
+2025-08-14 14:48:37,251 - ThreadPoolExecutor-3_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ SELECT
+  COUNT(*)
+FROM (
+  SELECT
+    *
+  FROM "analytics"."sqlmesh__staging"."staging__stg_events__1053797422" AS "staging__stg_events__1053797422"
+  WHERE
+    (
+      "event_id" IS NULL OR "user_id" IS NULL
+    ) AND TRUE
+) AS "audit" (base.py:2260)
+2025-08-14 14:48:37,365 - ThreadPoolExecutor-3_0 - sqlmesh.core.state_sync.db.facade - INFO - Adding interval (2025-08-10 00:00:00, 2025-08-13 00:00:00) for snapshot SnapshotId<"analytics"."staging"."stg_events": 2456517470> (facade.py:619)
+2025-08-14 14:48:37,366 - ThreadPoolExecutor-3_0 - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."staging"."stg_events": 2456517470> (interval.py:213)
+2025-08-14 14:48:37,393 - ThreadPoolExecutor-3_1 - sqlmesh.core.snapshot.evaluator - INFO - Evaluating snapshot SnapshotId<"analytics"."analytics"."daily_revenue": 3418150025> (evaluator.py:648)
+2025-08-14 14:48:37,516 - ThreadPoolExecutor-3_1 - sqlmesh.core.snapshot.evaluator - INFO - Inserting batch (2024-01-01 00:00:00, 2025-08-13 00:00:00) into analytics.sqlmesh__analytics.analytics__daily_revenue__276492176' (evaluator.py:703)
+2025-08-14 14:48:37,521 - ThreadPoolExecutor-3_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ DELETE FROM "sqlmesh__analytics"."analytics__daily_revenue__276492176"
+WHERE
+  "event_date" BETWEEN CAST('2024-01-01' AS DATE) AND CAST('2025-08-12' AS DATE) (base.py:2260)
+2025-08-14 14:48:37,534 - ThreadPoolExecutor-3_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ INSERT INTO "sqlmesh__analytics"."analytics__daily_revenue__276492176" (
+  "event_date",
+  "unique_users",
+  "total_revenue"
+)
+SELECT
+  "event_date",
+  "unique_users",
+  "total_revenue"
+FROM (
+  SELECT
+    "stg_events"."event_date" AS "event_date",
+    COUNT(DISTINCT "stg_events"."user_id") AS "unique_users",
+    COALESCE(
+      SUM(CASE WHEN "stg_events"."event_type" = 'purchase' THEN "stg_events"."revenue" END),
+      0
+    ) AS "total_revenue"
+  FROM "analytics"."sqlmesh__staging"."staging__stg_events__1053797422" AS "stg_events"
+  WHERE
+    "stg_events"."event_date" < '2025-08-12'
+    AND "stg_events"."event_date" >= '2024-01-01'
+  GROUP BY
+    "stg_events"."event_date"
+) AS "_subquery"
+WHERE
+  "event_date" BETWEEN CAST('2024-01-01' AS DATE) AND CAST('2025-08-12' AS DATE) (base.py:2260)
+2025-08-14 14:48:37,669 - ThreadPoolExecutor-3_1 - sqlmesh.core.state_sync.db.facade - INFO - Adding interval (2024-01-01 00:00:00, 2025-08-13 00:00:00) for snapshot SnapshotId<"analytics"."analytics"."daily_revenue": 3418150025> (facade.py:619)
+2025-08-14 14:48:37,670 - ThreadPoolExecutor-3_1 - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."analytics"."daily_revenue": 3418150025> (interval.py:213)
+2025-08-14 14:48:37,697 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage EnvironmentRecordUpdateStage (evaluator.py:125)
+2025-08-14 14:48:37,709 - MainThread - sqlmesh.core.state_sync.db.facade - INFO - Promoting environment 'josh_dev' (facade.py:167)
+2025-08-14 14:48:37,764 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage VirtualLayerUpdateStage (evaluator.py:125)
+2025-08-14 14:48:37,780 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Creating schema 'analytics.raw__josh_dev' (evaluator.py:1180)
+2025-08-14 14:48:37,782 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ CREATE SCHEMA IF NOT EXISTS "raw__josh_dev" (base.py:2260)
+2025-08-14 14:48:37,786 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Creating schema 'analytics.analytics__josh_dev' (evaluator.py:1180)
+2025-08-14 14:48:37,788 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ CREATE SCHEMA IF NOT EXISTS "analytics__josh_dev" (base.py:2260)
+2025-08-14 14:48:37,791 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Creating schema 'analytics.staging__josh_dev' (evaluator.py:1180)
+2025-08-14 14:48:37,795 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ CREATE SCHEMA IF NOT EXISTS "staging__josh_dev" (base.py:2260)
+2025-08-14 14:48:37,798 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Creating schema 'analytics.sqlmesh_example__josh_dev' (evaluator.py:1180)
+2025-08-14 14:48:37,800 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ CREATE SCHEMA IF NOT EXISTS "sqlmesh_example__josh_dev" (base.py:2260)
+2025-08-14 14:48:37,892 - ThreadPoolExecutor-4_0 - sqlmesh.core.snapshot.evaluator - INFO - Updating view 'analytics.sqlmesh_example__josh_dev.seed_model' to point at table 'analytics.sqlmesh__sqlmesh_example.sqlmesh_example__seed_model__2185867172' (evaluator.py:1497)
+2025-08-14 14:48:37,897 - ThreadPoolExecutor-4_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ DROP VIEW IF EXISTS "sqlmesh_example__josh_dev"."seed_model" CASCADE (base.py:2260)
+2025-08-14 14:48:37,975 - ThreadPoolExecutor-4_1 - sqlmesh.core.snapshot.evaluator - INFO - Updating view 'analytics.raw__josh_dev.events' to point at table 'analytics.sqlmesh__raw.raw__events__561768720' (evaluator.py:1497)
+2025-08-14 14:48:37,979 - ThreadPoolExecutor-4_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ DROP VIEW IF EXISTS "raw__josh_dev"."events" CASCADE (base.py:2260)
+2025-08-14 14:48:37,984 - ThreadPoolExecutor-4_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ CREATE VIEW "sqlmesh_example__josh_dev"."seed_model" AS
+SELECT
+  *
+FROM "analytics"."sqlmesh__sqlmesh_example"."sqlmesh_example__seed_model__2185867172" (base.py:2260)
+2025-08-14 14:48:37,985 - ThreadPoolExecutor-4_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ CREATE VIEW "raw__josh_dev"."events" AS
+SELECT
+  *
+FROM "analytics"."sqlmesh__raw"."raw__events__561768720" (base.py:2260)
+2025-08-14 14:48:38,094 - ThreadPoolExecutor-4_2 - sqlmesh.core.snapshot.evaluator - INFO - Updating view 'analytics.sqlmesh_example__josh_dev.incremental_model' to point at table 'analytics.sqlmesh__sqlmesh_example.sqlmesh_example__incremental_model__3659766683' (evaluator.py:1497)
+2025-08-14 14:48:38,094 - ThreadPoolExecutor-4_1 - sqlmesh.core.snapshot.evaluator - INFO - Updating view 'analytics.staging__josh_dev.stg_events' to point at table 'analytics.sqlmesh__staging.staging__stg_events__1053797422' (evaluator.py:1497)
+2025-08-14 14:48:38,096 - ThreadPoolExecutor-4_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ DROP VIEW IF EXISTS "sqlmesh_example__josh_dev"."incremental_model" CASCADE (base.py:2260)
+2025-08-14 14:48:38,098 - ThreadPoolExecutor-4_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ DROP VIEW IF EXISTS "staging__josh_dev"."stg_events" CASCADE (base.py:2260)
+2025-08-14 14:48:38,103 - ThreadPoolExecutor-4_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ CREATE VIEW "staging__josh_dev"."stg_events" AS
+SELECT
+  *
+FROM "analytics"."sqlmesh__staging"."staging__stg_events__1053797422" (base.py:2260)
+2025-08-14 14:48:38,105 - ThreadPoolExecutor-4_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ CREATE VIEW "sqlmesh_example__josh_dev"."incremental_model" AS
+SELECT
+  *
+FROM "analytics"."sqlmesh__sqlmesh_example"."sqlmesh_example__incremental_model__3659766683" (base.py:2260)
+2025-08-14 14:48:38,111 - ThreadPoolExecutor-4_1 - sqlmesh.core.snapshot.evaluator - INFO - Updating view 'analytics.analytics__josh_dev.daily_revenue' to point at table 'analytics.sqlmesh__analytics.analytics__daily_revenue__276492176' (evaluator.py:1497)
+2025-08-14 14:48:38,114 - ThreadPoolExecutor-4_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ DROP VIEW IF EXISTS "analytics__josh_dev"."daily_revenue" CASCADE (base.py:2260)
+2025-08-14 14:48:38,121 - ThreadPoolExecutor-4_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ CREATE VIEW "analytics__josh_dev"."daily_revenue" AS
+SELECT
+  *
+FROM "analytics"."sqlmesh__analytics"."analytics__daily_revenue__276492176" (base.py:2260)
+2025-08-14 14:48:38,122 - ThreadPoolExecutor-4_2 - sqlmesh.core.snapshot.evaluator - INFO - Updating view 'analytics.sqlmesh_example__josh_dev.full_model' to point at table 'analytics.sqlmesh__sqlmesh_example.sqlmesh_example__full_model__3968245968' (evaluator.py:1497)
+2025-08-14 14:48:38,124 - ThreadPoolExecutor-4_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ DROP VIEW IF EXISTS "sqlmesh_example__josh_dev"."full_model" CASCADE (base.py:2260)
+2025-08-14 14:48:38,129 - ThreadPoolExecutor-4_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ CREATE VIEW "sqlmesh_example__josh_dev"."full_model" AS
+SELECT
+  *
+FROM "analytics"."sqlmesh__sqlmesh_example"."sqlmesh_example__full_model__3968245968" (base.py:2260)
+2025-08-14 14:48:38,139 - ThreadPoolExecutor-4_2 - sqlmesh.core.snapshot.evaluator - INFO - Updating view 'analytics.sqlmesh_example__josh_dev.new_model' to point at table 'analytics.sqlmesh__sqlmesh_example.sqlmesh_example__new_model__1686394361' (evaluator.py:1497)
+2025-08-14 14:48:38,141 - ThreadPoolExecutor-4_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ DROP VIEW IF EXISTS "sqlmesh_example__josh_dev"."new_model" CASCADE (base.py:2260)
+2025-08-14 14:48:38,145 - ThreadPoolExecutor-4_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: d1ae11823f45461185c374472eb31824 */ CREATE VIEW "sqlmesh_example__josh_dev"."new_model" AS
+SELECT
+  *
+FROM "analytics"."sqlmesh__sqlmesh_example"."sqlmesh_example__new_model__1686394361" (base.py:2260)
+2025-08-14 14:48:38,156 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage FinalizeEnvironmentStage (evaluator.py:125)
+2025-08-14 14:48:38,172 - MainThread - sqlmesh.core.state_sync.db.environment - INFO - Finalizing environment 'josh_dev' (environment.py:139)
+2025-08-14 14:48:38,195 - MainThread - root - INFO - Shutting down the event dispatcher (dispatcher.py:159)

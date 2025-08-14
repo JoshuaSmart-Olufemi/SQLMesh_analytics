@@ -5,7 +5,7 @@ MODEL (
   grain item_id,
   audits (
     assert_positive_order_ids(column := item_id),
-    not_null(column := item_id)
+    not_null(columns := (item_id))
     ),
 );
 

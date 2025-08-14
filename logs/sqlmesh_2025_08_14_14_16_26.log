@@ -1,0 +1,194 @@
+2025-08-14 14:16:36,018 - MainThread - sqlmesh.core.config.connection - INFO - Creating new DuckDB adapter for in-memory database (connection.py:483)
+2025-08-14 14:19:16,374 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage CreateSnapshotRecordsStage (evaluator.py:125)
+2025-08-14 14:19:16,439 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage PhysicalLayerUpdateStage (evaluator.py:125)
+2025-08-14 14:19:16,443 - ThreadPoolExecutor-1_0 - sqlmesh.core.snapshot.evaluator - INFO - Listing data objects in schema analytics.sqlmesh__analytics (evaluator.py:361)
+2025-08-14 14:19:16,443 - ThreadPoolExecutor-1_1 - sqlmesh.core.snapshot.evaluator - INFO - Listing data objects in schema analytics.sqlmesh__sqlmesh_example (evaluator.py:361)
+2025-08-14 14:19:16,444 - ThreadPoolExecutor-1_2 - sqlmesh.core.snapshot.evaluator - INFO - Listing data objects in schema analytics.sqlmesh__staging (evaluator.py:361)
+2025-08-14 14:19:16,445 - ThreadPoolExecutor-1_3 - sqlmesh.core.snapshot.evaluator - INFO - Listing data objects in schema analytics.sqlmesh__raw (evaluator.py:361)
+2025-08-14 14:19:16,481 - ThreadPoolExecutor-1_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 88a0d9a6b4364af7b30bd5ff3023a466 */ SELECT
+  current_catalog (base.py:2260)
+2025-08-14 14:19:16,518 - ThreadPoolExecutor-1_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 88a0d9a6b4364af7b30bd5ff3023a466 */ SELECT
+  current_catalog (base.py:2260)
+2025-08-14 14:19:16,559 - ThreadPoolExecutor-1_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 88a0d9a6b4364af7b30bd5ff3023a466 */ SELECT
+  current_catalog (base.py:2260)
+2025-08-14 14:19:16,598 - ThreadPoolExecutor-1_3 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 88a0d9a6b4364af7b30bd5ff3023a466 */ SELECT
+  current_catalog (base.py:2260)
+2025-08-14 14:19:16,652 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Creating schema 'analytics.sqlmesh__raw' (evaluator.py:1180)
+2025-08-14 14:19:16,693 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 88a0d9a6b4364af7b30bd5ff3023a466 */ CREATE SCHEMA IF NOT EXISTS "sqlmesh__raw" (base.py:2260)
+2025-08-14 14:19:16,695 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Creating schema 'analytics.sqlmesh__sqlmesh_example' (evaluator.py:1180)
+2025-08-14 14:19:16,696 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 88a0d9a6b4364af7b30bd5ff3023a466 */ CREATE SCHEMA IF NOT EXISTS "sqlmesh__sqlmesh_example" (base.py:2260)
+2025-08-14 14:19:16,698 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Creating schema 'analytics.sqlmesh__staging' (evaluator.py:1180)
+2025-08-14 14:19:16,699 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 88a0d9a6b4364af7b30bd5ff3023a466 */ CREATE SCHEMA IF NOT EXISTS "sqlmesh__staging" (base.py:2260)
+2025-08-14 14:19:16,700 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Creating schema 'analytics.sqlmesh__analytics' (evaluator.py:1180)
+2025-08-14 14:19:16,701 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 88a0d9a6b4364af7b30bd5ff3023a466 */ CREATE SCHEMA IF NOT EXISTS "sqlmesh__analytics" (base.py:2260)
+2025-08-14 14:19:16,737 - ThreadPoolExecutor-2_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 88a0d9a6b4364af7b30bd5ff3023a466 */ SELECT
+  1
+FROM "information_schema"."tables"
+WHERE
+  "table_name" = 'staging__stg_events__3222761726'
+  AND "table_schema" = 'sqlmesh__staging' (base.py:2260)
+2025-08-14 14:19:16,777 - ThreadPoolExecutor-2_1 - sqlmesh.core.snapshot.evaluator - INFO - Creating table 'analytics.sqlmesh__sqlmesh_example.sqlmesh_example__full_model__3968245968__dev' (evaluator.py:1542)
+2025-08-14 14:19:16,778 - ThreadPoolExecutor-2_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 88a0d9a6b4364af7b30bd5ff3023a466 */ CREATE TABLE IF NOT EXISTS "sqlmesh__sqlmesh_example"."sqlmesh_example__full_model__3968245968__dev" (
+  "item_id" INT,
+  "num_orders" BIGINT
+) (base.py:2260)
+2025-08-14 14:19:16,784 - ThreadPoolExecutor-2_0 - sqlmesh.core.snapshot.evaluator - INFO - Creating view 'analytics.sqlmesh__staging.staging__stg_events__3222761726' (evaluator.py:1983)
+2025-08-14 14:19:16,790 - ThreadPoolExecutor-2_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 88a0d9a6b4364af7b30bd5ff3023a466 */ CREATE VIEW "sqlmesh__staging"."staging__stg_events__3222761726" AS
+SELECT
+  "events"."event_id" AS "event_id",
+  "events"."user_id" AS "user_id",
+  "events"."event_type" AS "event_type",
+  "events"."event_timestamp" AS "event_timestamp",
+  DATE("events"."event_timestamp") AS "event_date",
+  "events"."revenue" AS "revenue"
+FROM "analytics"."sqlmesh__raw"."raw__events__561768720" AS "events"
+WHERE
+  NOT "events"."event_id" IS NULL (base.py:2260)
+2025-08-14 14:19:16,790 - ThreadPoolExecutor-2_1 - sqlmesh.core.snapshot.evaluator - INFO - Dry running model 'sqlmesh_example.full_model' (evaluator.py:1564)
+2025-08-14 14:19:16,791 - ThreadPoolExecutor-2_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 88a0d9a6b4364af7b30bd5ff3023a466 */ SELECT
+  "incremental_model"."item_id" AS "item_id",
+  COUNT(DISTINCT "incremental_model"."id") AS "num_orders"
+FROM "analytics"."sqlmesh__sqlmesh_example"."sqlmesh_example__incremental_model__3659766683" AS "incremental_model"
+WHERE
+  FALSE
+GROUP BY
+  "incremental_model"."item_id"
+LIMIT 0 (base.py:2260)
+2025-08-14 14:19:16,797 - ThreadPoolExecutor-2_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 88a0d9a6b4364af7b30bd5ff3023a466 */ COMMENT ON COLUMN "sqlmesh__staging"."staging__stg_events__3222761726"."event_date" IS 'Extract date for incremental processing' (base.py:2260)
+2025-08-14 14:19:16,840 - ThreadPoolExecutor-2_2 - sqlmesh.core.snapshot.evaluator - INFO - Creating table 'analytics.sqlmesh__sqlmesh_example.sqlmesh_example__new_model__1686394361__dev' (evaluator.py:1542)
+2025-08-14 14:19:16,841 - ThreadPoolExecutor-2_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 88a0d9a6b4364af7b30bd5ff3023a466 */ CREATE TABLE IF NOT EXISTS "sqlmesh__sqlmesh_example"."sqlmesh_example__new_model__1686394361__dev" (
+  "item_id" INT,
+  "num_orders" BIGINT,
+  "half" BIGINT
+) (base.py:2260)
+2025-08-14 14:19:16,857 - ThreadPoolExecutor-2_2 - sqlmesh.core.snapshot.evaluator - INFO - Dry running model 'sqlmesh_example.new_model' (evaluator.py:1564)
+2025-08-14 14:19:16,858 - ThreadPoolExecutor-2_0 - sqlmesh.core.snapshot.evaluator - INFO - Creating table 'analytics.sqlmesh__analytics.analytics__daily_revenue__1924015129__dev' (evaluator.py:1542)
+2025-08-14 14:19:16,859 - ThreadPoolExecutor-2_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 88a0d9a6b4364af7b30bd5ff3023a466 */ SELECT
+  "full_model"."item_id" AS "item_id",
+  "full_model"."num_orders" AS "num_orders",
+  "full_model"."num_orders" / 2 AS "half"
+FROM "analytics"."sqlmesh__sqlmesh_example"."sqlmesh_example__full_model__3968245968" AS "full_model"
+WHERE
+  FALSE
+LIMIT 0 (base.py:2260)
+2025-08-14 14:19:16,861 - ThreadPoolExecutor-2_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 88a0d9a6b4364af7b30bd5ff3023a466 */ CREATE TABLE IF NOT EXISTS "sqlmesh__analytics"."analytics__daily_revenue__1924015129__dev" (
+  "event_date" DATE,
+  "unique_users" BIGINT,
+  "total_revenue" DECIMAL(10, 2)
+) (base.py:2260)
+2025-08-14 14:19:16,864 - ThreadPoolExecutor-2_0 - sqlmesh.core.snapshot.evaluator - INFO - Dry running model 'analytics.daily_revenue' (evaluator.py:1564)
+2025-08-14 14:19:16,867 - ThreadPoolExecutor-2_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 88a0d9a6b4364af7b30bd5ff3023a466 */ SELECT
+  "stg_events"."event_date" AS "event_date",
+  COUNT(DISTINCT "stg_events"."user_id") AS "unique_users",
+  COALESCE(
+    SUM(CASE WHEN "stg_events"."event_type" = 'purchase' THEN "stg_events"."revenue" END),
+    0
+  ) AS "total_revenue"
+FROM "analytics"."sqlmesh__staging"."staging__stg_events__3222761726" AS "stg_events"
+WHERE
+  FALSE AND FALSE
+GROUP BY
+  "stg_events"."event_date"
+LIMIT 0 (base.py:2260)
+2025-08-14 14:19:16,875 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage AuditOnlyRunStage (evaluator.py:125)
+2025-08-14 14:19:16,887 - ThreadPoolExecutor-3_0 - sqlmesh.core.snapshot.evaluator - INFO - Auditing snapshot SnapshotId<"analytics"."sqlmesh_example"."full_model": 502438451> (evaluator.py:553)
+2025-08-14 14:19:16,928 - ThreadPoolExecutor-3_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 88a0d9a6b4364af7b30bd5ff3023a466 */ SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0
+    AND NOT "attisdropped"
+    AND "relname" = 'sqlmesh_example__full_model__3968245968'
+  )
+  AND "nspname" = 'sqlmesh__sqlmesh_example' (base.py:2260)
+2025-08-14 14:19:16,938 - ThreadPoolExecutor-3_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 88a0d9a6b4364af7b30bd5ff3023a466 */ SELECT
+  COUNT(*)
+FROM (
+  SELECT
+    *
+  FROM "analytics"."sqlmesh__sqlmesh_example"."sqlmesh_example__full_model__3968245968" AS "sqlmesh_example__full_model__3968245968"
+  WHERE
+    "item_id" < 0
+) AS "audit" (base.py:2260)
+2025-08-14 14:19:16,942 - ThreadPoolExecutor-3_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 88a0d9a6b4364af7b30bd5ff3023a466 */ SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0
+    AND NOT "attisdropped"
+    AND "relname" = 'sqlmesh_example__full_model__3968245968'
+  )
+  AND "nspname" = 'sqlmesh__sqlmesh_example' (base.py:2260)
+2025-08-14 14:19:16,947 - MainThread - sqlmesh.core.scheduler - INFO - Execution failed for node ('"analytics"."sqlmesh_example"."full_model"', ((1754784000000, 1755043200000), 0)) (scheduler.py:499)
+Traceback (most recent call last):
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/renderer.py", line 250, in _render
+    transformed_expressions = ensure_list(macro_evaluator.transform(expression))
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/macros.py", line 291, in transform
+    transformed = exp.replace_tree(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlglot/expressions.py", line 8616, in replace_tree
+    new_node = fun(node)
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/macros.py", line 259, in evaluate_macros
+    raise SQLMeshError(f"Macro variable '{node.name}' is undefined.")
+sqlmesh.utils.errors.SQLMeshError: Macro variable 'columns' is undefined.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/utils/concurrency.py", line 69, in _process_node
+    self.fn(node)
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/scheduler.py", line 443, in evaluate_node
+    audit_results = self._audit_snapshot(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/scheduler.py", line 693, in _audit_snapshot
+    audit_results = self.snapshot_evaluator.audit(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/snapshot/evaluator.py", line 569, in audit
+    self._audit(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/snapshot/evaluator.py", line 1137, in _audit
+    query = snapshot.model.render_audit_query(audit, **kwargs)
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/model/definition.py", line 529, in render_audit_query
+    rendered_query = query_renderer.render(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/renderer.py", line 530, in render
+    expressions = super()._render(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/renderer.py", line 252, in _render
+    raise_config_error(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/utils/errors.py", line 200, in raise_config_error
+    raise error_type(f"{msg} at '{location}'", location)
+sqlmesh.utils.errors.ConfigError: Failed to resolve macros for
+
+SELECT
+  *
+FROM @this_model
+WHERE
+  @AND(@REDUCE(@EACH(@columns, c -> c IS NULL), (l, r) -> l OR r), @condition)
+
+Macro variable 'columns' is undefined.
+ at '.'
+
+The above exception was the direct cause of the following exception:
+
+sqlmesh.utils.concurrency.NodeExecutionFailedError: Execution failed for node ('"analytics"."sqlmesh_example"."full_model"', ((1754784000000, 1755043200000), 0))
+2025-08-14 14:19:17,045 - MainThread - sqlmesh.core.context - INFO - Plan application failed. (context.py:1702)
+Traceback (most recent call last):
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/context.py", line 1694, in apply
+    self._apply(plan, circuit_breaker)
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/context.py", line 2487, in _apply
+    self._scheduler.create_plan_evaluator(self).evaluate(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/plan/evaluator.py", line 107, in evaluate
+    self._evaluate_stages(plan_stages, plan)
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/plan/evaluator.py", line 127, in _evaluate_stages
+    handler(stage, plan)
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/plan/evaluator.py", line 276, in visit_audit_only_run_stage
+    raise PlanError("Plan application failed.")
+sqlmesh.utils.errors.PlanError: Plan application failed.
+2025-08-14 14:19:17,049 - MainThread - root - INFO - Shutting down the event dispatcher (dispatcher.py:159)

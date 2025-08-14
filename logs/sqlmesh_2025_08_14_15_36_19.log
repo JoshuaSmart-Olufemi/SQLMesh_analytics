@@ -1,0 +1,41 @@
+2025-08-14 15:36:38,102 - MainThread - sqlmesh.core.config.connection - INFO - Creating new DuckDB adapter for in-memory database (connection.py:483)
+2025-08-14 15:36:55,752 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage PhysicalLayerUpdateStage (evaluator.py:125)
+2025-08-14 15:36:55,755 - ThreadPoolExecutor-1_0 - sqlmesh.core.snapshot.evaluator - INFO - Listing data objects in schema analytics.sqlmesh__analytics (evaluator.py:361)
+2025-08-14 15:36:55,755 - ThreadPoolExecutor-1_1 - sqlmesh.core.snapshot.evaluator - INFO - Listing data objects in schema analytics.sqlmesh__sqlmesh_example (evaluator.py:361)
+2025-08-14 15:36:55,756 - ThreadPoolExecutor-1_2 - sqlmesh.core.snapshot.evaluator - INFO - Listing data objects in schema analytics.sqlmesh__staging (evaluator.py:361)
+2025-08-14 15:36:55,756 - ThreadPoolExecutor-1_3 - sqlmesh.core.snapshot.evaluator - INFO - Listing data objects in schema analytics.sqlmesh__raw (evaluator.py:361)
+2025-08-14 15:36:55,796 - ThreadPoolExecutor-1_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 390a844323af41debada2ed236a82b7c */ SELECT
+  current_catalog (base.py:2260)
+2025-08-14 15:36:55,832 - ThreadPoolExecutor-1_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 390a844323af41debada2ed236a82b7c */ SELECT
+  current_catalog (base.py:2260)
+2025-08-14 15:36:55,870 - ThreadPoolExecutor-1_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 390a844323af41debada2ed236a82b7c */ SELECT
+  current_catalog (base.py:2260)
+2025-08-14 15:36:55,912 - ThreadPoolExecutor-1_3 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 390a844323af41debada2ed236a82b7c */ SELECT
+  current_catalog (base.py:2260)
+2025-08-14 15:36:55,945 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage BackfillStage (evaluator.py:125)
+2025-08-14 15:36:55,946 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage EnvironmentRecordUpdateStage (evaluator.py:125)
+2025-08-14 15:36:55,949 - MainThread - sqlmesh.core.state_sync.db.facade - INFO - Promoting environment 'prod' (facade.py:167)
+2025-08-14 15:36:55,970 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage UnpauseStage (evaluator.py:125)
+2025-08-14 15:36:55,974 - MainThread - sqlmesh.core.state_sync.db.snapshot - INFO - Unpausing snapshot SnapshotId<"analytics"."sqlmesh_example"."full_model": 4121470012> (snapshot.py:143)
+2025-08-14 15:36:55,975 - MainThread - sqlmesh.core.state_sync.db.snapshot - INFO - Unpausing snapshot SnapshotId<"analytics"."sqlmesh_example"."new_model": 435915384> (snapshot.py:143)
+2025-08-14 15:36:55,975 - MainThread - sqlmesh.core.state_sync.db.snapshot - INFO - Pausing snapshot SnapshotId<"analytics"."sqlmesh_example"."full_model": 2070410384> (snapshot.py:172)
+2025-08-14 15:36:55,976 - MainThread - sqlmesh.core.state_sync.db.snapshot - INFO - Pausing snapshot SnapshotId<"analytics"."sqlmesh_example"."new_model": 1754313528> (snapshot.py:172)
+2025-08-14 15:36:55,980 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage VirtualLayerUpdateStage (evaluator.py:125)
+2025-08-14 15:36:55,984 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Creating schema 'analytics.sqlmesh_example' (evaluator.py:1180)
+2025-08-14 15:36:56,030 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 390a844323af41debada2ed236a82b7c */ CREATE SCHEMA IF NOT EXISTS "sqlmesh_example" (base.py:2260)
+2025-08-14 15:36:56,078 - ThreadPoolExecutor-2_0 - sqlmesh.core.snapshot.evaluator - INFO - Updating view 'analytics.sqlmesh_example.full_model' to point at table 'analytics.sqlmesh__sqlmesh_example.sqlmesh_example__full_model__3968245968' (evaluator.py:1497)
+2025-08-14 15:36:56,079 - ThreadPoolExecutor-2_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 390a844323af41debada2ed236a82b7c */ DROP VIEW IF EXISTS "sqlmesh_example"."full_model" CASCADE (base.py:2260)
+2025-08-14 15:36:56,082 - ThreadPoolExecutor-2_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 390a844323af41debada2ed236a82b7c */ CREATE VIEW "sqlmesh_example"."full_model" AS
+SELECT
+  *
+FROM "analytics"."sqlmesh__sqlmesh_example"."sqlmesh_example__full_model__3968245968" (base.py:2260)
+2025-08-14 15:36:56,145 - ThreadPoolExecutor-2_1 - sqlmesh.core.snapshot.evaluator - INFO - Updating view 'analytics.sqlmesh_example.new_model' to point at table 'analytics.sqlmesh__sqlmesh_example.sqlmesh_example__new_model__1686394361' (evaluator.py:1497)
+2025-08-14 15:36:56,147 - ThreadPoolExecutor-2_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 390a844323af41debada2ed236a82b7c */ DROP VIEW IF EXISTS "sqlmesh_example"."new_model" CASCADE (base.py:2260)
+2025-08-14 15:36:56,149 - ThreadPoolExecutor-2_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 390a844323af41debada2ed236a82b7c */ CREATE VIEW "sqlmesh_example"."new_model" AS
+SELECT
+  *
+FROM "analytics"."sqlmesh__sqlmesh_example"."sqlmesh_example__new_model__1686394361" (base.py:2260)
+2025-08-14 15:36:56,155 - ThreadPoolExecutor-2_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 390a844323af41debada2ed236a82b7c */ COMMENT ON VIEW "sqlmesh_example"."new_model" IS 'demo/example model' (base.py:2260)
+2025-08-14 15:36:56,163 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage FinalizeEnvironmentStage (evaluator.py:125)
+2025-08-14 15:36:56,165 - MainThread - sqlmesh.core.state_sync.db.environment - INFO - Finalizing environment 'prod' (environment.py:139)
+2025-08-14 15:36:56,170 - MainThread - root - INFO - Shutting down the event dispatcher (dispatcher.py:159)

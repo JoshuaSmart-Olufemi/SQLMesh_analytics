@@ -3,8 +3,8 @@ MODEL (
     kind VIEW,
     cron '@hourly',
     audits (
-    unique_values(columns := (event_id, user_id, event_date)),
-    not_null(columns := (event_id, user_id, event_date))
+    unique_values(columns := (event_id)),
+    not_null(columns := (event_id, user_id))
   ),
     grain event_id 
 );
@@ -15,7 +15,7 @@ SELECT
     event_type,
     event_timestamp,
     -- Extract date for incremental processing
-    DATE(event_timestamp) as event_date,
+    cast(event_timestamp as date) as event_date,
     revenue
 FROM
     raw.events

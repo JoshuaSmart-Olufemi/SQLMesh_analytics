@@ -1,0 +1,232 @@
+2025-08-14 14:53:55,030 - MainThread - sqlmesh.core.state_sync.db.interval - INFO - Compacting 11 intervals for 8 snapshots (interval.py:128)
+2025-08-14 14:53:55,031 - MainThread - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."analytics"."daily_revenue": 4240679414> (interval.py:213)
+2025-08-14 14:53:55,031 - MainThread - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."analytics"."daily_revenue": 3418150025> (interval.py:213)
+2025-08-14 14:53:55,031 - MainThread - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."raw"."events": 3950673072> (interval.py:213)
+2025-08-14 14:53:55,032 - MainThread - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."sqlmesh_example"."full_model": 1291504539> (interval.py:213)
+2025-08-14 14:53:55,032 - MainThread - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."sqlmesh_example"."incremental_model": 3025917805> (interval.py:213)
+2025-08-14 14:53:55,032 - MainThread - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."sqlmesh_example"."new_model": 3098620597> (interval.py:213)
+2025-08-14 14:53:55,032 - MainThread - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."staging"."stg_events": 2456517470> (interval.py:213)
+2025-08-14 14:53:55,033 - MainThread - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."staging"."stg_events": 1492575250> (interval.py:213)
+2025-08-14 14:53:55,046 - MainThread - sqlmesh.core.state_sync.db.interval - INFO - Compacting 0 intervals for 0 snapshots (interval.py:128)
+2025-08-14 14:53:55,397 - ThreadPoolExecutor-1_0 - sqlmesh.core.snapshot.evaluator - INFO - Evaluating snapshot SnapshotId<"analytics"."sqlmesh_example"."incremental_model": 3025917805> (evaluator.py:648)
+2025-08-14 14:53:55,397 - ThreadPoolExecutor-1_1 - sqlmesh.core.snapshot.evaluator - INFO - Evaluating snapshot SnapshotId<"analytics"."staging"."stg_events": 2456517470> (evaluator.py:648)
+2025-08-14 14:53:55,458 - ThreadPoolExecutor-1_0 - sqlmesh.core.snapshot.evaluator - INFO - Inserting batch (2025-08-13 00:00:00, 2025-08-14 00:00:00) into analytics.sqlmesh__sqlmesh_example.sqlmesh_example__incremental_model__3659766683' (evaluator.py:703)
+2025-08-14 14:53:55,461 - ThreadPoolExecutor-1_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: DELETE FROM "sqlmesh__sqlmesh_example"."sqlmesh_example__incremental_model__3659766683"
+WHERE
+  "event_date" BETWEEN CAST('2025-08-13' AS DATE) AND CAST('2025-08-13' AS DATE) (base.py:2260)
+2025-08-14 14:53:55,511 - ThreadPoolExecutor-1_1 - sqlmesh.core.snapshot.evaluator - INFO - Inserting batch (2025-08-13 00:00:00, 2025-08-14 13:00:00) into analytics.sqlmesh__staging.staging__stg_events__1053797422' (evaluator.py:703)
+2025-08-14 14:53:55,513 - ThreadPoolExecutor-1_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: INSERT INTO "sqlmesh__sqlmesh_example"."sqlmesh_example__incremental_model__3659766683" (
+  "id",
+  "item_id",
+  "event_date"
+)
+SELECT
+  "id",
+  "item_id",
+  "event_date"
+FROM (
+  SELECT
+    "seed_model"."id" AS "id",
+    "seed_model"."item_id" AS "item_id",
+    "seed_model"."event_date" AS "event_date"
+  FROM "analytics"."sqlmesh__sqlmesh_example"."sqlmesh_example__seed_model__2185867172" AS "seed_model"
+  WHERE
+    "seed_model"."event_date" <= CAST('2025-08-13' AS DATE)
+    AND "seed_model"."event_date" >= CAST('2025-08-13' AS DATE)
+) AS "_subquery"
+WHERE
+  "event_date" BETWEEN CAST('2025-08-13' AS DATE) AND CAST('2025-08-13' AS DATE) (base.py:2260)
+2025-08-14 14:53:55,515 - ThreadPoolExecutor-1_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  1
+FROM "information_schema"."tables"
+WHERE
+  "table_name" = 'staging__stg_events__1053797422'
+  AND "table_schema" = 'sqlmesh__staging' (base.py:2260)
+2025-08-14 14:53:55,526 - ThreadPoolExecutor-1_0 - sqlmesh.core.state_sync.db.facade - INFO - Adding interval (2025-08-13 00:00:00, 2025-08-14 00:00:00) for snapshot SnapshotId<"analytics"."sqlmesh_example"."incremental_model": 3025917805> (facade.py:619)
+2025-08-14 14:53:55,527 - ThreadPoolExecutor-1_0 - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."sqlmesh_example"."incremental_model": 3025917805> (interval.py:213)
+2025-08-14 14:53:55,605 - ThreadPoolExecutor-1_1 - sqlmesh.core.snapshot.evaluator - INFO - Skipping creation of the view 'analytics.sqlmesh__staging.staging__stg_events__1053797422' (evaluator.py:1934)
+2025-08-14 14:53:55,608 - ThreadPoolExecutor-1_1 - sqlmesh.core.snapshot.evaluator - INFO - Auditing snapshot SnapshotId<"analytics"."staging"."stg_events": 2456517470> (evaluator.py:553)
+2025-08-14 14:53:55,613 - ThreadPoolExecutor-1_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0
+    AND NOT "attisdropped"
+    AND "relname" = 'staging__stg_events__1053797422'
+  )
+  AND "nspname" = 'sqlmesh__staging' (base.py:2260)
+2025-08-14 14:53:55,648 - ThreadPoolExecutor-1_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  COUNT(*)
+FROM (
+  SELECT
+    *
+  FROM (
+    SELECT
+      ROW_NUMBER() OVER (PARTITION BY (
+        "event_id"
+      ) ORDER BY (
+        "event_id"
+      ) NULLS FIRST) AS "rank_"
+    FROM "analytics"."sqlmesh__staging"."staging__stg_events__1053797422" AS "staging__stg_events__1053797422"
+    WHERE
+      TRUE
+  ) AS "_q_0"
+  WHERE
+    "rank_" > 1
+) AS "audit" (base.py:2260)
+2025-08-14 14:53:55,658 - ThreadPoolExecutor-1_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0
+    AND NOT "attisdropped"
+    AND "relname" = 'staging__stg_events__1053797422'
+  )
+  AND "nspname" = 'sqlmesh__staging' (base.py:2260)
+2025-08-14 14:53:55,675 - ThreadPoolExecutor-1_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  COUNT(*)
+FROM (
+  SELECT
+    *
+  FROM "analytics"."sqlmesh__staging"."staging__stg_events__1053797422" AS "staging__stg_events__1053797422"
+  WHERE
+    (
+      "event_id" IS NULL OR "user_id" IS NULL
+    ) AND TRUE
+) AS "audit" (base.py:2260)
+2025-08-14 14:53:55,684 - ThreadPoolExecutor-1_1 - sqlmesh.core.state_sync.db.facade - INFO - Adding interval (2025-08-13 00:00:00, 2025-08-14 13:00:00) for snapshot SnapshotId<"analytics"."staging"."stg_events": 2456517470> (facade.py:619)
+2025-08-14 14:53:55,685 - ThreadPoolExecutor-1_1 - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."staging"."stg_events": 2456517470> (interval.py:213)
+2025-08-14 14:53:55,691 - ThreadPoolExecutor-1_2 - sqlmesh.core.snapshot.evaluator - INFO - Evaluating snapshot SnapshotId<"analytics"."sqlmesh_example"."full_model": 2070410384> (evaluator.py:648)
+2025-08-14 14:53:55,708 - ThreadPoolExecutor-1_1 - sqlmesh.core.snapshot.evaluator - INFO - Evaluating snapshot SnapshotId<"analytics"."analytics"."daily_revenue": 3418150025> (evaluator.py:648)
+2025-08-14 14:53:55,774 - ThreadPoolExecutor-1_2 - sqlmesh.core.snapshot.evaluator - INFO - Inserting batch (2025-08-13 00:00:00, 2025-08-14 00:00:00) into analytics.sqlmesh__sqlmesh_example.sqlmesh_example__full_model__3968245968' (evaluator.py:703)
+2025-08-14 14:53:55,781 - ThreadPoolExecutor-1_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  1
+FROM "information_schema"."tables"
+WHERE
+  "table_name" = 'sqlmesh_example__full_model__3968245968'
+  AND "table_schema" = 'sqlmesh__sqlmesh_example' (base.py:2260)
+2025-08-14 14:53:55,786 - ThreadPoolExecutor-1_1 - sqlmesh.core.snapshot.evaluator - INFO - Inserting batch (2025-08-11 00:00:00, 2025-08-14 00:00:00) into analytics.sqlmesh__analytics.analytics__daily_revenue__276492176' (evaluator.py:703)
+2025-08-14 14:53:55,789 - ThreadPoolExecutor-1_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: DELETE FROM "sqlmesh__analytics"."analytics__daily_revenue__276492176"
+WHERE
+  "event_date" BETWEEN CAST('2025-08-11' AS DATE) AND CAST('2025-08-13' AS DATE) (base.py:2260)
+2025-08-14 14:53:55,794 - ThreadPoolExecutor-1_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: INSERT INTO "sqlmesh__analytics"."analytics__daily_revenue__276492176" (
+  "event_date",
+  "unique_users",
+  "total_revenue"
+)
+SELECT
+  "event_date",
+  "unique_users",
+  "total_revenue"
+FROM (
+  SELECT
+    "stg_events"."event_date" AS "event_date",
+    COUNT(DISTINCT "stg_events"."user_id") AS "unique_users",
+    COALESCE(
+      SUM(CASE WHEN "stg_events"."event_type" = 'purchase' THEN "stg_events"."revenue" END),
+      0
+    ) AS "total_revenue"
+  FROM "analytics"."sqlmesh__staging"."staging__stg_events__1053797422" AS "stg_events"
+  WHERE
+    "stg_events"."event_date" < '2025-08-13'
+    AND "stg_events"."event_date" >= '2025-08-11'
+  GROUP BY
+    "stg_events"."event_date"
+) AS "_subquery"
+WHERE
+  "event_date" BETWEEN CAST('2025-08-11' AS DATE) AND CAST('2025-08-13' AS DATE) (base.py:2260)
+2025-08-14 14:53:55,796 - ThreadPoolExecutor-1_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: DELETE FROM "sqlmesh__sqlmesh_example"."sqlmesh_example__full_model__3968245968"
+WHERE
+  TRUE (base.py:2260)
+2025-08-14 14:53:55,798 - ThreadPoolExecutor-1_1 - sqlmesh.core.state_sync.db.facade - INFO - Adding interval (2025-08-11 00:00:00, 2025-08-14 00:00:00) for snapshot SnapshotId<"analytics"."analytics"."daily_revenue": 3418150025> (facade.py:619)
+2025-08-14 14:53:55,798 - ThreadPoolExecutor-1_1 - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."analytics"."daily_revenue": 3418150025> (interval.py:213)
+2025-08-14 14:53:55,799 - ThreadPoolExecutor-1_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: INSERT INTO "sqlmesh__sqlmesh_example"."sqlmesh_example__full_model__3968245968" (
+  "item_id",
+  "num_orders"
+)
+SELECT
+  "incremental_model"."item_id" AS "item_id",
+  COUNT(DISTINCT "incremental_model"."id") AS "num_orders"
+FROM "analytics"."sqlmesh__sqlmesh_example"."sqlmesh_example__incremental_model__3659766683" AS "incremental_model"
+GROUP BY
+  "incremental_model"."item_id" (base.py:2260)
+2025-08-14 14:53:55,813 - ThreadPoolExecutor-1_2 - sqlmesh.core.snapshot.evaluator - INFO - Auditing snapshot SnapshotId<"analytics"."sqlmesh_example"."full_model": 2070410384> (evaluator.py:553)
+2025-08-14 14:53:55,819 - ThreadPoolExecutor-1_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0
+    AND NOT "attisdropped"
+    AND "relname" = 'sqlmesh_example__full_model__3968245968'
+  )
+  AND "nspname" = 'sqlmesh__sqlmesh_example' (base.py:2260)
+2025-08-14 14:53:55,831 - MainThread - sqlmesh.core.scheduler - INFO - SKIPPED snapshot "analytics"."sqlmesh_example"."new_model"
+ (scheduler.py:494)
+2025-08-14 14:53:55,831 - MainThread - sqlmesh.core.scheduler - INFO - Execution failed for node ('"analytics"."sqlmesh_example"."full_model"', ((1755043200000, 1755129600000), 0)) (scheduler.py:499)
+Traceback (most recent call last):
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/renderer.py", line 250, in _render
+    transformed_expressions = ensure_list(macro_evaluator.transform(expression))
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/macros.py", line 291, in transform
+    transformed = exp.replace_tree(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlglot/expressions.py", line 8616, in replace_tree
+    new_node = fun(node)
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/macros.py", line 259, in evaluate_macros
+    raise SQLMeshError(f"Macro variable '{node.name}' is undefined.")
+sqlmesh.utils.errors.SQLMeshError: Macro variable 'columns' is undefined.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/utils/concurrency.py", line 69, in _process_node
+    self.fn(node)
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/scheduler.py", line 457, in evaluate_node
+    audit_results = self.evaluate(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/scheduler.py", line 199, in evaluate
+    audit_results = self._audit_snapshot(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/scheduler.py", line 693, in _audit_snapshot
+    audit_results = self.snapshot_evaluator.audit(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/snapshot/evaluator.py", line 569, in audit
+    self._audit(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/snapshot/evaluator.py", line 1137, in _audit
+    query = snapshot.model.render_audit_query(audit, **kwargs)
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/model/definition.py", line 529, in render_audit_query
+    rendered_query = query_renderer.render(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/renderer.py", line 530, in render
+    expressions = super()._render(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/renderer.py", line 252, in _render
+    raise_config_error(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/utils/errors.py", line 200, in raise_config_error
+    raise error_type(f"{msg} at '{location}'", location)
+sqlmesh.utils.errors.ConfigError: Failed to resolve macros for
+
+SELECT
+  *
+FROM @this_model
+WHERE
+  @AND(@REDUCE(@EACH(@columns, c -> c IS NULL), (l, r) -> l OR r), @condition)
+
+Macro variable 'columns' is undefined.
+ at '.'
+
+The above exception was the direct cause of the following exception:
+
+sqlmesh.utils.concurrency.NodeExecutionFailedError: Execution failed for node ('"analytics"."sqlmesh_example"."full_model"', ((1755043200000, 1755129600000), 0))
+2025-08-14 14:53:55,911 - MainThread - root - INFO - Shutting down the event dispatcher (dispatcher.py:159)
