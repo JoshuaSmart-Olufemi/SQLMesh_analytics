@@ -1,7 +1,7 @@
 MODEL (
     name staging.stg_events,
     kind VIEW,
-    cron '@hourly',
+    cron '@daily',
     audits (
     unique_values(columns := (event_id)),
     not_null(columns := (event_id, user_id))
