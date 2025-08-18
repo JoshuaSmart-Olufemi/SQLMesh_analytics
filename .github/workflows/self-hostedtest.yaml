@@ -1,0 +1,12 @@
+# .github/workflows/selfhosted-test.yml
+name: Self-hosted runner test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: self-hosted
+    steps:
+      - name: Say hello
+        run: echo "🎉 Hello from my self-hosted runner!"
