@@ -1,4 +1,4 @@
-name: SQLMesh CI
+name: SQLMesh CI 
 
 on:
   pull_request:
@@ -10,13 +10,14 @@ on:
 jobs:
   sqlmesh:
     runs-on: self-hosted
+    timeout-minutes: 20   # ✅ prevent infinite hangs
     strategy:
       matrix:
         python-version: ["3.10"]
 
-    env:  # ✅ Global env so all steps can use it
+    env:
       POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
-      POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}   # ✅ Add port if needed
+      POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
       POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
       POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
       POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
@@ -51,14 +52,7 @@ jobs:
         env:
           SCHEMA: staging_${{ github.event.pull_request.number }}
         run: |
-          sqlmesh plan --environment staging --no-prompts --skip-backfill --no-gaps --verbose --create-pr-comment
-
-      - name: Apply SQLMesh changes on Dynamic Staging
-        if: github.event_name == 'pull_request' && github.event.action != 'closed'
-        env:
-          SCHEMA: staging_${{ github.event.pull_request.number }}
-        run: |
-          sqlmesh run --environment staging --no-prompts --skip-backfill --no-gaps --verbose
+          sqlmesh plan --environment staging --no-prompts --skip-backfill --verbose --create-pr-comment
 
       - name: Run SQLMesh tests (Dynamic Staging)
         if: github.event_name == 'pull_request' && github.event.action != 'closed'
@@ -80,9 +74,9 @@ jobs:
       # ---------------------
       # Deployment on merge to main (Production)
       # ---------------------
-      - name: Run SQLMesh run on Production
+      - name: Apply SQLMesh changes on Production
         if: github.event_name == 'push' && github.ref == 'refs/heads/main' && success()
         env:
           SCHEMA: public
         run: |
-          sqlmesh run --environment prod --no-prompts --skip-backfill --no-gaps --verbose
+          sqlmesh plan --environment prod --no-prompts --skip-backfill --verbose --auto-apply
