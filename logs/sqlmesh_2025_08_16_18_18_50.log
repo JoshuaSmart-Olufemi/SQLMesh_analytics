@@ -1,0 +1,59 @@
+2025-08-16 18:19:06,253 - MainThread - sqlmesh.core.config.connection - INFO - Creating new DuckDB adapter for in-memory database (connection.py:483)
+2025-08-16 18:19:19,286 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage PhysicalLayerUpdateStage (evaluator.py:125)
+2025-08-16 18:19:19,294 - ThreadPoolExecutor-1_0 - sqlmesh.core.snapshot.evaluator - INFO - Listing data objects in schema analytics.sqlmesh__analytics (evaluator.py:361)
+2025-08-16 18:19:19,295 - ThreadPoolExecutor-1_1 - sqlmesh.core.snapshot.evaluator - INFO - Listing data objects in schema analytics.sqlmesh__sqlmesh_example (evaluator.py:361)
+2025-08-16 18:19:19,295 - ThreadPoolExecutor-1_2 - sqlmesh.core.snapshot.evaluator - INFO - Listing data objects in schema analytics.sqlmesh__staging (evaluator.py:361)
+2025-08-16 18:19:19,295 - ThreadPoolExecutor-1_3 - sqlmesh.core.snapshot.evaluator - INFO - Listing data objects in schema analytics.sqlmesh__raw (evaluator.py:361)
+2025-08-16 18:19:19,348 - ThreadPoolExecutor-1_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 86f2bd54d9ea45fea07a7d7f5a4e9108 */ SELECT
+  current_catalog (base.py:2260)
+2025-08-16 18:19:19,385 - ThreadPoolExecutor-1_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 86f2bd54d9ea45fea07a7d7f5a4e9108 */ SELECT
+  current_catalog (base.py:2260)
+2025-08-16 18:19:19,422 - ThreadPoolExecutor-1_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 86f2bd54d9ea45fea07a7d7f5a4e9108 */ SELECT
+  current_catalog (base.py:2260)
+2025-08-16 18:19:19,463 - ThreadPoolExecutor-1_3 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 86f2bd54d9ea45fea07a7d7f5a4e9108 */ SELECT
+  current_catalog (base.py:2260)
+2025-08-16 18:19:19,493 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage BackfillStage (evaluator.py:125)
+2025-08-16 18:19:19,495 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage EnvironmentRecordUpdateStage (evaluator.py:125)
+2025-08-16 18:19:19,498 - MainThread - sqlmesh.core.state_sync.db.facade - INFO - Promoting environment 'prod' (facade.py:167)
+2025-08-16 18:19:19,531 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage UnpauseStage (evaluator.py:125)
+2025-08-16 18:19:19,536 - MainThread - sqlmesh.core.state_sync.db.snapshot - INFO - Unpausing snapshot SnapshotId<"analytics"."staging"."stg_orders": 2186219172> (snapshot.py:143)
+2025-08-16 18:19:19,536 - MainThread - sqlmesh.core.state_sync.db.snapshot - INFO - Unpausing snapshot SnapshotId<"analytics"."staging"."stg_customer_segments": 4089766744> (snapshot.py:143)
+2025-08-16 18:19:19,537 - MainThread - sqlmesh.core.state_sync.db.snapshot - INFO - Unpausing snapshot SnapshotId<"analytics"."staging"."stg_order_items": 4198097237> (snapshot.py:143)
+2025-08-16 18:19:19,537 - MainThread - sqlmesh.core.state_sync.db.snapshot - INFO - Unpausing snapshot SnapshotId<"analytics"."staging"."stg_products": 469018842> (snapshot.py:143)
+2025-08-16 18:19:19,538 - MainThread - sqlmesh.core.state_sync.db.snapshot - INFO - Unpausing snapshot SnapshotId<"analytics"."staging"."stg_sellers": 867275013> (snapshot.py:143)
+2025-08-16 18:19:19,541 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage VirtualLayerUpdateStage (evaluator.py:125)
+2025-08-16 18:19:19,548 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Creating schema 'analytics.staging' (evaluator.py:1180)
+2025-08-16 18:19:19,591 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 86f2bd54d9ea45fea07a7d7f5a4e9108 */ CREATE SCHEMA IF NOT EXISTS "staging" (base.py:2260)
+2025-08-16 18:19:19,635 - ThreadPoolExecutor-2_0 - sqlmesh.core.snapshot.evaluator - INFO - Updating view 'analytics.staging.stg_sellers' to point at table 'analytics.sqlmesh__staging.staging__stg_sellers__3172254506' (evaluator.py:1497)
+2025-08-16 18:19:19,637 - ThreadPoolExecutor-2_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 86f2bd54d9ea45fea07a7d7f5a4e9108 */ DROP VIEW IF EXISTS "staging"."stg_sellers" CASCADE (base.py:2260)
+2025-08-16 18:19:19,682 - ThreadPoolExecutor-2_1 - sqlmesh.core.snapshot.evaluator - INFO - Updating view 'analytics.staging.stg_orders' to point at table 'analytics.sqlmesh__staging.staging__stg_orders__4069310843' (evaluator.py:1497)
+2025-08-16 18:19:19,684 - ThreadPoolExecutor-2_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 86f2bd54d9ea45fea07a7d7f5a4e9108 */ DROP VIEW IF EXISTS "staging"."stg_orders" CASCADE (base.py:2260)
+2025-08-16 18:19:19,730 - ThreadPoolExecutor-2_2 - sqlmesh.core.snapshot.evaluator - INFO - Updating view 'analytics.staging.stg_products' to point at table 'analytics.sqlmesh__staging.staging__stg_products__3764744303' (evaluator.py:1497)
+2025-08-16 18:19:19,732 - ThreadPoolExecutor-2_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 86f2bd54d9ea45fea07a7d7f5a4e9108 */ DROP VIEW IF EXISTS "staging"."stg_products" CASCADE (base.py:2260)
+2025-08-16 18:19:19,785 - ThreadPoolExecutor-2_3 - sqlmesh.core.snapshot.evaluator - INFO - Updating view 'analytics.staging.stg_customer_segments' to point at table 'analytics.sqlmesh__staging.staging__stg_customer_segments__4008439995' (evaluator.py:1497)
+2025-08-16 18:19:19,787 - ThreadPoolExecutor-2_3 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 86f2bd54d9ea45fea07a7d7f5a4e9108 */ DROP VIEW IF EXISTS "staging"."stg_customer_segments" CASCADE (base.py:2260)
+2025-08-16 18:19:19,788 - ThreadPoolExecutor-2_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 86f2bd54d9ea45fea07a7d7f5a4e9108 */ CREATE VIEW "staging"."stg_sellers" AS
+SELECT
+  *
+FROM "analytics"."sqlmesh__staging"."staging__stg_sellers__3172254506" (base.py:2260)
+2025-08-16 18:19:19,788 - ThreadPoolExecutor-2_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 86f2bd54d9ea45fea07a7d7f5a4e9108 */ CREATE VIEW "staging"."stg_products" AS
+SELECT
+  *
+FROM "analytics"."sqlmesh__staging"."staging__stg_products__3764744303" (base.py:2260)
+2025-08-16 18:19:19,789 - ThreadPoolExecutor-2_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 86f2bd54d9ea45fea07a7d7f5a4e9108 */ CREATE VIEW "staging"."stg_orders" AS
+SELECT
+  *
+FROM "analytics"."sqlmesh__staging"."staging__stg_orders__4069310843" (base.py:2260)
+2025-08-16 18:19:19,791 - ThreadPoolExecutor-2_3 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 86f2bd54d9ea45fea07a7d7f5a4e9108 */ CREATE VIEW "staging"."stg_customer_segments" AS
+SELECT
+  *
+FROM "analytics"."sqlmesh__staging"."staging__stg_customer_segments__4008439995" (base.py:2260)
+2025-08-16 18:19:19,802 - ThreadPoolExecutor-2_1 - sqlmesh.core.snapshot.evaluator - INFO - Updating view 'analytics.staging.stg_order_items' to point at table 'analytics.sqlmesh__staging.staging__stg_order_items__665358577' (evaluator.py:1497)
+2025-08-16 18:19:19,805 - ThreadPoolExecutor-2_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 86f2bd54d9ea45fea07a7d7f5a4e9108 */ DROP VIEW IF EXISTS "staging"."stg_order_items" CASCADE (base.py:2260)
+2025-08-16 18:19:19,807 - ThreadPoolExecutor-2_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 86f2bd54d9ea45fea07a7d7f5a4e9108 */ CREATE VIEW "staging"."stg_order_items" AS
+SELECT
+  *
+FROM "analytics"."sqlmesh__staging"."staging__stg_order_items__665358577" (base.py:2260)
+2025-08-16 18:19:19,818 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage FinalizeEnvironmentStage (evaluator.py:125)
+2025-08-16 18:19:19,823 - MainThread - sqlmesh.core.state_sync.db.environment - INFO - Finalizing environment 'prod' (environment.py:139)
+2025-08-16 18:19:19,831 - MainThread - root - INFO - Shutting down the event dispatcher (dispatcher.py:159)

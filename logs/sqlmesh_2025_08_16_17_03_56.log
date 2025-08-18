@@ -1,0 +1,189 @@
+2025-08-16 17:04:08,609 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0 AND NOT "attisdropped" AND "relname" = 'stg_events'
+  )
+  AND "nspname" = 'staging' (base.py:2260)
+2025-08-16 17:04:08,622 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0 AND NOT "attisdropped" AND "relname" = 'stg_events'
+  )
+  AND "nspname" = 'staging__josh_dev' (base.py:2260)
+2025-08-16 17:04:08,637 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: CREATE SCHEMA IF NOT EXISTS "sqlmesh_temp" (base.py:2260)
+2025-08-16 17:04:08,644 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: CREATE TABLE IF NOT EXISTS "analytics"."sqlmesh_temp"."__temp_diff_dxmhgd9c" AS
+WITH "__source" AS (
+  SELECT
+    "s"."event_id",
+    "s"."user_id",
+    "s"."event_type",
+    "s"."event_timestamp",
+    "s"."event_date",
+    "s"."revenue",
+    "s"."event_id" AS "__sqlmesh_join_key"
+  FROM "analytics"."staging"."stg_events" AS "s"
+), "__target" AS (
+  SELECT
+    "t"."event_id",
+    "t"."user_id",
+    "t"."event_type",
+    "t"."event_timestamp",
+    "t"."event_date",
+    "t"."revenue",
+    "t"."event_id" AS "__sqlmesh_join_key"
+  FROM "analytics"."staging__josh_dev"."stg_events" AS "t"
+), "__stats" AS (
+  SELECT
+    "s"."event_id" AS "s__event_id",
+    "s"."user_id" AS "s__user_id",
+    "s"."event_type" AS "s__event_type",
+    "s"."event_timestamp" AS "s__event_timestamp",
+    "s"."event_date" AS "s__event_date",
+    "s"."revenue" AS "s__revenue",
+    "s"."__sqlmesh_join_key" AS "s____sqlmesh_join_key",
+    "t"."event_id" AS "t__event_id",
+    "t"."user_id" AS "t__user_id",
+    "t"."event_type" AS "t__event_type",
+    "t"."event_timestamp" AS "t__event_timestamp",
+    "t"."event_date" AS "t__event_date",
+    "t"."revenue" AS "t__revenue",
+    "t"."__sqlmesh_join_key" AS "t____sqlmesh_join_key",
+    CASE WHEN NOT "s"."__sqlmesh_join_key" IS NULL THEN 1 ELSE 0 END AS "s_exists",
+    CASE WHEN NOT "t"."__sqlmesh_join_key" IS NULL THEN 1 ELSE 0 END AS "t_exists",
+    CASE WHEN "s"."__sqlmesh_join_key" = "t"."__sqlmesh_join_key" THEN 1 ELSE 0 END AS "row_joined",
+    CASE WHEN "s"."event_id" IS NULL AND "t"."event_id" IS NULL THEN 1 ELSE 0 END AS "null_grain",
+    CASE
+      WHEN "s"."event_id" = "t"."event_id"
+      THEN 1
+      WHEN (
+        "s"."event_id" IS NULL
+      ) AND (
+        "t"."event_id" IS NULL
+      )
+      THEN 1
+      WHEN (
+        "s"."event_id" IS NULL
+      ) OR (
+        "t"."event_id" IS NULL
+      )
+      THEN 0
+      ELSE 0
+    END AS "event_id_matches",
+    CASE
+      WHEN "s"."user_id" = "t"."user_id"
+      THEN 1
+      WHEN (
+        "s"."user_id" IS NULL
+      ) AND (
+        "t"."user_id" IS NULL
+      )
+      THEN 1
+      WHEN (
+        "s"."user_id" IS NULL
+      ) OR (
+        "t"."user_id" IS NULL
+      )
+      THEN 0
+      ELSE 0
+    END AS "user_id_matches",
+    CASE
+      WHEN "s"."event_type" = "t"."event_type"
+      THEN 1
+      WHEN (
+        "s"."event_type" IS NULL
+      ) AND (
+        "t"."event_type" IS NULL
+      )
+      THEN 1
+      WHEN (
+        "s"."event_type" IS NULL
+      ) OR (
+        "t"."event_type" IS NULL
+      )
+      THEN 0
+      ELSE 0
+    END AS "event_type_matches",
+    CASE
+      WHEN "s"."event_timestamp" = "t"."event_timestamp"
+      THEN 1
+      WHEN (
+        "s"."event_timestamp" IS NULL
+      ) AND (
+        "t"."event_timestamp" IS NULL
+      )
+      THEN 1
+      WHEN (
+        "s"."event_timestamp" IS NULL
+      ) OR (
+        "t"."event_timestamp" IS NULL
+      )
+      THEN 0
+      ELSE 0
+    END AS "event_timestamp_matches",
+    CASE
+      WHEN "s"."event_date" = "t"."event_date"
+      THEN 1
+      WHEN (
+        "s"."event_date" IS NULL
+      ) AND (
+        "t"."event_date" IS NULL
+      )
+      THEN 1
+      WHEN (
+        "s"."event_date" IS NULL
+      ) OR (
+        "t"."event_date" IS NULL
+      )
+      THEN 0
+      ELSE 0
+    END AS "event_date_matches",
+    CASE
+      WHEN "s"."revenue" = "t"."revenue"
+      THEN 1
+      WHEN (
+        "s"."revenue" IS NULL
+      ) AND (
+        "t"."revenue" IS NULL
+      )
+      THEN 1
+      WHEN (
+        "s"."revenue" IS NULL
+      ) OR (
+        "t"."revenue" IS NULL
+      )
+      THEN 0
+      ELSE 0
+    END AS "revenue_matches"
+  FROM "__source" AS "s"
+  FULL JOIN "__target" AS "t"
+    ON "s"."__sqlmesh_join_key" = "t"."__sqlmesh_join_key"
+)
+SELECT
+  *,
+  CASE
+    WHEN "event_id_matches" = 1
+    AND "user_id_matches" = 1
+    AND "event_type_matches" = 1
+    AND "event_timestamp_matches" = 1
+    AND "event_date_matches" = 1
+    AND "revenue_matches" = 1
+    THEN 1
+    ELSE 0
+  END AS "row_full_match"
+FROM "__stats" (base.py:2260)
+2025-08-16 17:04:08,787 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: DROP TABLE IF EXISTS "sqlmesh_temp"."__temp_diff_dxmhgd9c" (base.py:2260)
+2025-08-16 17:04:08,864 - MainThread - root - INFO - Shutting down the event dispatcher (dispatcher.py:159)

@@ -1,0 +1,252 @@
+2025-08-16 18:15:56,583 - MainThread - sqlmesh.core.config.connection - INFO - Creating new DuckDB adapter for in-memory database (connection.py:483)
+2025-08-16 18:16:12,664 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage CreateSnapshotRecordsStage (evaluator.py:125)
+2025-08-16 18:16:12,786 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage PhysicalLayerUpdateStage (evaluator.py:125)
+2025-08-16 18:16:12,798 - ThreadPoolExecutor-1_0 - sqlmesh.core.snapshot.evaluator - INFO - Listing data objects in schema analytics.sqlmesh__staging (evaluator.py:361)
+2025-08-16 18:16:12,799 - ThreadPoolExecutor-1_1 - sqlmesh.core.snapshot.evaluator - INFO - Listing data objects in schema analytics.sqlmesh__analytics (evaluator.py:361)
+2025-08-16 18:16:12,800 - ThreadPoolExecutor-1_2 - sqlmesh.core.snapshot.evaluator - INFO - Listing data objects in schema analytics.sqlmesh__sqlmesh_example (evaluator.py:361)
+2025-08-16 18:16:12,801 - ThreadPoolExecutor-1_3 - sqlmesh.core.snapshot.evaluator - INFO - Listing data objects in schema analytics.sqlmesh__raw (evaluator.py:361)
+2025-08-16 18:16:12,865 - ThreadPoolExecutor-1_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: a4187121361546bc9a898e09000db804 */ SELECT
+  current_catalog (base.py:2260)
+2025-08-16 18:16:12,932 - ThreadPoolExecutor-1_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: a4187121361546bc9a898e09000db804 */ SELECT
+  current_catalog (base.py:2260)
+2025-08-16 18:16:12,993 - ThreadPoolExecutor-1_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: a4187121361546bc9a898e09000db804 */ SELECT
+  current_catalog (base.py:2260)
+2025-08-16 18:16:13,053 - ThreadPoolExecutor-1_3 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: a4187121361546bc9a898e09000db804 */ SELECT
+  current_catalog (base.py:2260)
+2025-08-16 18:16:13,114 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Creating schema 'analytics.sqlmesh__staging' (evaluator.py:1180)
+2025-08-16 18:16:13,175 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: a4187121361546bc9a898e09000db804 */ CREATE SCHEMA IF NOT EXISTS "sqlmesh__staging" (base.py:2260)
+2025-08-16 18:16:13,178 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Creating schema 'analytics.sqlmesh__sqlmesh_example' (evaluator.py:1180)
+2025-08-16 18:16:13,178 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: a4187121361546bc9a898e09000db804 */ CREATE SCHEMA IF NOT EXISTS "sqlmesh__sqlmesh_example" (base.py:2260)
+2025-08-16 18:16:13,179 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Creating schema 'analytics.sqlmesh__raw' (evaluator.py:1180)
+2025-08-16 18:16:13,180 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: a4187121361546bc9a898e09000db804 */ CREATE SCHEMA IF NOT EXISTS "sqlmesh__raw" (base.py:2260)
+2025-08-16 18:16:13,182 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Creating schema 'analytics.sqlmesh__analytics' (evaluator.py:1180)
+2025-08-16 18:16:13,182 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: a4187121361546bc9a898e09000db804 */ CREATE SCHEMA IF NOT EXISTS "sqlmesh__analytics" (base.py:2260)
+2025-08-16 18:16:13,245 - ThreadPoolExecutor-2_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: a4187121361546bc9a898e09000db804 */ SELECT
+  1
+FROM "information_schema"."tables"
+WHERE
+  "table_name" = 'staging__stg_orders__4069310843'
+  AND "table_schema" = 'sqlmesh__staging' (base.py:2260)
+2025-08-16 18:16:13,297 - ThreadPoolExecutor-2_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: a4187121361546bc9a898e09000db804 */ SELECT
+  1
+FROM "information_schema"."tables"
+WHERE
+  "table_name" = 'staging__stg_customer_segments__4008439995'
+  AND "table_schema" = 'sqlmesh__staging' (base.py:2260)
+2025-08-16 18:16:13,350 - ThreadPoolExecutor-2_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: a4187121361546bc9a898e09000db804 */ SELECT
+  1
+FROM "information_schema"."tables"
+WHERE
+  "table_name" = 'staging__stg_order_items__665358577'
+  AND "table_schema" = 'sqlmesh__staging' (base.py:2260)
+2025-08-16 18:16:13,403 - ThreadPoolExecutor-2_3 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: a4187121361546bc9a898e09000db804 */ SELECT
+  1
+FROM "information_schema"."tables"
+WHERE
+  "table_name" = 'staging__stg_sellers__3950441889'
+  AND "table_schema" = 'sqlmesh__staging' (base.py:2260)
+2025-08-16 18:16:13,410 - ThreadPoolExecutor-2_3 - sqlmesh.core.snapshot.evaluator - INFO - Creating view 'analytics.sqlmesh__staging.staging__stg_sellers__3950441889' (evaluator.py:1983)
+2025-08-16 18:16:13,424 - ThreadPoolExecutor-2_3 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: a4187121361546bc9a898e09000db804 */ CREATE VIEW "sqlmesh__staging"."staging__stg_sellers__3950441889" AS
+SELECT
+  "seller_id" AS "seller_id",
+  "business_name" AS "business_name",
+  "first_name" AS "first_name",
+  "last_name" AS "last_name",
+  "business_type" AS "business_type",
+  "country_code" AS "country_code",
+  "state_province" AS "state_province",
+  "city" AS "city",
+  "registration_date" AS "registration_date",
+  "seller_status" AS "seller_status",
+  "total_products" AS "total_products",
+  "total_sales_ytd" AS "total_sales_ytd",
+  "commission_paid_ytd" AS "commission_paid_ytd",
+  "avg_rating" AS "avg_rating",
+  "total_reviews" AS "total_reviews",
+  "christian_certfied" AS "christian_certfied",
+  "faithx_partner" AS "faithx_partner",
+  "store_monthly_fee" AS "store_monthly_fee"
+FROM "analytics"."raw"."sellers" AS "sellers" (base.py:2260)
+2025-08-16 18:16:13,427 - ThreadPoolExecutor-2_1 - sqlmesh.core.snapshot.evaluator - INFO - Creating view 'analytics.sqlmesh__staging.staging__stg_customer_segments__4008439995' (evaluator.py:1983)
+2025-08-16 18:16:13,427 - ThreadPoolExecutor-2_2 - sqlmesh.core.snapshot.evaluator - INFO - Creating view 'analytics.sqlmesh__staging.staging__stg_order_items__665358577' (evaluator.py:1983)
+2025-08-16 18:16:13,427 - ThreadPoolExecutor-2_0 - sqlmesh.core.snapshot.evaluator - INFO - Creating view 'analytics.sqlmesh__staging.staging__stg_orders__4069310843' (evaluator.py:1983)
+2025-08-16 18:16:13,435 - ThreadPoolExecutor-2_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: a4187121361546bc9a898e09000db804 */ CREATE VIEW "sqlmesh__staging"."staging__stg_customer_segments__4008439995" AS
+SELECT
+  "segment_id" AS "segment_id",
+  "segment_name" AS "segment_name",
+  "user_id" AS "user_id",
+  "segment_criteria" AS "segment_criteria",
+  "assigned_date" AS "assigned_date",
+  "segment_value_score" AS "segment_value_score",
+  "predicted_ltv" AS "predicted_ltv",
+  "churn_risk_score" AS "churn_risk_score",
+  "preferred_category" AS "preferred_category",
+  "avg_order_value" AS "avg_order_value",
+  "purchase_frequency_days" AS "purchase_frequency_days"
+FROM "analytics"."raw"."customer_segments" AS "customer_segments" (base.py:2260)
+2025-08-16 18:16:13,438 - ThreadPoolExecutor-2_3 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: a4187121361546bc9a898e09000db804 */ SELECT
+  1
+FROM "information_schema"."tables"
+WHERE
+  "table_name" = 'staging__stg_products__3824273842'
+  AND "table_schema" = 'sqlmesh__staging' (base.py:2260)
+2025-08-16 18:16:13,445 - ThreadPoolExecutor-2_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: a4187121361546bc9a898e09000db804 */ CREATE VIEW "sqlmesh__staging"."staging__stg_order_items__665358577" AS
+SELECT
+  "order_item_id" AS "order_item_id",
+  "order_id" AS "order_id",
+  "product_id" AS "product_id",
+  "seller_id" AS "seller_id",
+  "quantity" AS "quantity",
+  "unit_price" AS "unit_price",
+  "total_price" AS "total_price",
+  "commission_rate" AS "commission_rate",
+  "product_category" AS "product_category"
+FROM "analytics"."raw"."order_items" AS "order_items" (base.py:2260)
+2025-08-16 18:16:13,452 - ThreadPoolExecutor-2_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: a4187121361546bc9a898e09000db804 */ CREATE VIEW "sqlmesh__staging"."staging__stg_orders__4069310843" AS
+SELECT
+  "order_id" AS "order_id",
+  "user_id" AS "user_id",
+  "order_date" AS "order_date",
+  "order_status" AS "order_status",
+  "total_amount" AS "total_amount",
+  "subtotal" AS "subtotal",
+  "tax_amount" AS "tax_amount",
+  "shipping_cost" AS "shipping_cost",
+  "discount_amount" AS "discount_amount",
+  "payment_method" AS "payment_method",
+  "shipping_address_country" AS "shipping_address_country",
+  "shipping_speed" AS "shipping_speed",
+  "fulfillment_date" AS "fulfillment_date",
+  "blessed_friday_order" AS "blessed_friday_order",
+  "faithx_event_discount" AS "faithx_event_discount"
+FROM "analytics"."raw"."orders" AS "orders" (base.py:2260)
+2025-08-16 18:16:13,455 - ThreadPoolExecutor-2_3 - sqlmesh.core.snapshot.evaluator - INFO - Creating view 'analytics.sqlmesh__staging.staging__stg_products__3824273842' (evaluator.py:1983)
+2025-08-16 18:16:13,466 - ThreadPoolExecutor-2_3 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: a4187121361546bc9a898e09000db804 */ CREATE VIEW "sqlmesh__staging"."staging__stg_products__3824273842" AS
+SELECT
+  "product_id" AS "product_id",
+  "seller_id" AS "seller_id",
+  "category_primary" AS "category_primary",
+  "category_secondary" AS "category_secondary",
+  "subcategory" AS "subcategory",
+  "price" AS "price",
+  "cost" AS "cost",
+  "inventory_quantity" AS "inventory_quantity",
+  "pordoct_status" AS "pordoct_status",
+  "created_date" AS "created_date",
+  "last_updated_date" AS "last_updated_date",
+  "product_tags" AS "product_tags",
+  "weight_lbs" AS "weight_lbs",
+  "dimensions_inches" AS "dimensions_inches",
+  "christian_themed" AS "christian_themed",
+  "target_audience" AS "target_audience",
+  CAST("seasonal_product" AS BOOLEAN) AS "seasonal_product"
+FROM "analytics"."raw"."products" AS "products" (base.py:2260)
+2025-08-16 18:16:13,479 - MainThread - sqlmesh.core.plan.evaluator - INFO - Execution failed for node SnapshotId<"analytics"."staging"."stg_sellers": 3319232870> (evaluator.py:196)
+Traceback (most recent call last):
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/utils/concurrency.py", line 69, in _process_node
+    self.fn(node)
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/utils/concurrency.py", line 172, in <lambda>
+    lambda s_id: fn(snapshots_by_id[s_id]),
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/snapshot/evaluator.py", line 425, in <lambda>
+    lambda s: self._create_snapshot(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/snapshot/evaluator.py", line 900, in _create_snapshot
+    self._execute_create(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/snapshot/evaluator.py", line 1214, in _execute_create
+    evaluation_strategy.create(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/snapshot/evaluator.py", line 1992, in create
+    self.adapter.create_view(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/engine_adapter/shared.py", line 341, in internal_wrapper
+    return func(*list_args, **kwargs)
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/engine_adapter/base_postgres.py", line 113, in create_view
+    super().create_view(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/engine_adapter/shared.py", line 326, in internal_wrapper
+    return func(*list_args, **kwargs)
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/engine_adapter/base.py", line 1122, in create_view
+    self.execute(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/engine_adapter/base.py", line 2237, in execute
+    self._execute(sql, **kwargs)
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/engine_adapter/base.py", line 2263, in _execute
+    self.cursor.execute(sql, **kwargs)
+psycopg2.errors.UndefinedColumn: column "christian_certfied" does not exist
+LINE 18:   "christian_certfied" AS "christian_certfied",
+           ^
+HINT:  Perhaps you meant to reference the column "sellers.christian_certified".
+
+
+The above exception was the direct cause of the following exception:
+
+sqlmesh.utils.concurrency.NodeExecutionFailedError: Execution failed for node SnapshotId<"analytics"."staging"."stg_sellers": 3319232870>
+2025-08-16 18:16:13,660 - MainThread - sqlmesh.core.plan.evaluator - INFO - Execution failed for node SnapshotId<"analytics"."staging"."stg_products": 2531886018> (evaluator.py:196)
+Traceback (most recent call last):
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/utils/concurrency.py", line 69, in _process_node
+    self.fn(node)
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/utils/concurrency.py", line 172, in <lambda>
+    lambda s_id: fn(snapshots_by_id[s_id]),
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/snapshot/evaluator.py", line 425, in <lambda>
+    lambda s: self._create_snapshot(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/snapshot/evaluator.py", line 900, in _create_snapshot
+    self._execute_create(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/snapshot/evaluator.py", line 1214, in _execute_create
+    evaluation_strategy.create(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/snapshot/evaluator.py", line 1992, in create
+    self.adapter.create_view(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/engine_adapter/shared.py", line 341, in internal_wrapper
+    return func(*list_args, **kwargs)
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/engine_adapter/base_postgres.py", line 113, in create_view
+    super().create_view(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/engine_adapter/shared.py", line 326, in internal_wrapper
+    return func(*list_args, **kwargs)
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/engine_adapter/base.py", line 1122, in create_view
+    self.execute(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/engine_adapter/base.py", line 2237, in execute
+    self._execute(sql, **kwargs)
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/engine_adapter/base.py", line 2263, in _execute
+    self.cursor.execute(sql, **kwargs)
+psycopg2.errors.UndefinedColumn: column "pordoct_status" does not exist
+LINE 11:   "pordoct_status" AS "pordoct_status",
+           ^
+HINT:  Perhaps you meant to reference the column "products.product_status".
+
+
+The above exception was the direct cause of the following exception:
+
+sqlmesh.utils.concurrency.NodeExecutionFailedError: Execution failed for node SnapshotId<"analytics"."staging"."stg_products": 2531886018>
+2025-08-16 18:16:13,712 - MainThread - sqlmesh.core.context - INFO - Plan application failed. (context.py:1702)
+Traceback (most recent call last):
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/plan/evaluator.py", line 178, in visit_physical_layer_update_stage
+    completion_status = self.snapshot_evaluator.create(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/snapshot/evaluator.py", line 402, in create
+    self._create_snapshots(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/snapshot/evaluator.py", line 437, in _create_snapshots
+    raise SnapshotCreationFailedError(errors, skipped)
+sqlmesh.core.snapshot.evaluator.SnapshotCreationFailedError: Physical table creation failed:
+
+Execution failed for node SnapshotId<"analytics"."staging"."stg_sellers": 3319232870>
+  column "christian_certfied" does not exist
+LINE 18:   "christian_certfied" AS "christian_certfied",
+           ^
+HINT:  Perhaps you meant to reference the column "sellers.christian_certified".
+
+
+Execution failed for node SnapshotId<"analytics"."staging"."stg_products": 2531886018>
+  column "pordoct_status" does not exist
+LINE 11:   "pordoct_status" AS "pordoct_status",
+           ^
+HINT:  Perhaps you meant to reference the column "products.product_status".
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/context.py", line 1694, in apply
+    self._apply(plan, circuit_breaker)
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/context.py", line 2487, in _apply
+    self._scheduler.create_plan_evaluator(self).evaluate(
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/plan/evaluator.py", line 107, in evaluate
+    self._evaluate_stages(plan_stages, plan)
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/plan/evaluator.py", line 127, in _evaluate_stages
+    handler(stage, plan)
+  File "/mnt/c/Users/josh/venv/lib/python3.10/site-packages/sqlmesh/core/plan/evaluator.py", line 201, in visit_physical_layer_update_stage
+    raise PlanError("Plan application failed.")
+sqlmesh.utils.errors.PlanError: Plan application failed.
+2025-08-16 18:16:13,725 - MainThread - root - INFO - Shutting down the event dispatcher (dispatcher.py:159)

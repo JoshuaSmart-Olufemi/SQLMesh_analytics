@@ -1,0 +1,310 @@
+2025-08-16 17:06:20,492 - MainThread - sqlmesh.core.state_sync.db.interval - INFO - Compacting 8 intervals for 5 snapshots (interval.py:128)
+2025-08-16 17:06:20,493 - MainThread - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."analytics"."daily_revenue": 3418150025> (interval.py:213)
+2025-08-16 17:06:20,494 - MainThread - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."sqlmesh_example"."incremental_model": 3025917805> (interval.py:213)
+2025-08-16 17:06:20,495 - MainThread - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."staging"."stg_events": 2456517470> (interval.py:213)
+2025-08-16 17:06:20,496 - MainThread - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."staging"."stg_events": 2209255847> (interval.py:213)
+2025-08-16 17:06:20,497 - MainThread - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."staging"."stg_userss": 992809002> (interval.py:213)
+2025-08-16 17:06:20,513 - MainThread - sqlmesh.core.state_sync.db.interval - INFO - Compacting 0 intervals for 0 snapshots (interval.py:128)
+2025-08-16 17:06:21,016 - ThreadPoolExecutor-1_1 - sqlmesh.core.snapshot.evaluator - INFO - Evaluating snapshot SnapshotId<"analytics"."sqlmesh_example"."incremental_model": 3025917805> (evaluator.py:648)
+2025-08-16 17:06:21,016 - ThreadPoolExecutor-1_0 - sqlmesh.core.snapshot.evaluator - INFO - Evaluating snapshot SnapshotId<"analytics"."staging"."stg_userss": 992809002> (evaluator.py:648)
+2025-08-16 17:06:21,017 - ThreadPoolExecutor-1_2 - sqlmesh.core.snapshot.evaluator - INFO - Evaluating snapshot SnapshotId<"analytics"."staging"."stg_events": 2209255847> (evaluator.py:648)
+2025-08-16 17:06:21,066 - ThreadPoolExecutor-1_1 - sqlmesh.core.snapshot.evaluator - INFO - Inserting batch (2025-08-14 00:00:00, 2025-08-16 00:00:00) into analytics.sqlmesh__sqlmesh_example.sqlmesh_example__incremental_model__3659766683' (evaluator.py:703)
+2025-08-16 17:06:21,068 - ThreadPoolExecutor-1_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: DELETE FROM "sqlmesh__sqlmesh_example"."sqlmesh_example__incremental_model__3659766683"
+WHERE
+  "event_date" BETWEEN CAST('2025-08-14' AS DATE) AND CAST('2025-08-15' AS DATE) (base.py:2260)
+2025-08-16 17:06:21,097 - ThreadPoolExecutor-1_0 - sqlmesh.core.snapshot.evaluator - INFO - Inserting batch (2025-08-15 00:00:00, 2025-08-16 00:00:00) into analytics.sqlmesh__staging.staging__stg_userss__1393102477' (evaluator.py:703)
+2025-08-16 17:06:21,098 - ThreadPoolExecutor-1_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  1
+FROM "information_schema"."tables"
+WHERE
+  "table_name" = 'staging__stg_userss__1393102477'
+  AND "table_schema" = 'sqlmesh__staging' (base.py:2260)
+2025-08-16 17:06:21,238 - ThreadPoolExecutor-1_2 - sqlmesh.core.snapshot.evaluator - INFO - Inserting batch (2025-08-15 00:00:00, 2025-08-16 00:00:00) into analytics.sqlmesh__staging.staging__stg_events__167098314' (evaluator.py:703)
+2025-08-16 17:06:21,242 - ThreadPoolExecutor-1_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  1
+FROM "information_schema"."tables"
+WHERE
+  "table_name" = 'staging__stg_events__167098314'
+  AND "table_schema" = 'sqlmesh__staging' (base.py:2260)
+2025-08-16 17:06:21,245 - ThreadPoolExecutor-1_0 - sqlmesh.core.snapshot.evaluator - INFO - Skipping creation of the view 'analytics.sqlmesh__staging.staging__stg_userss__1393102477' (evaluator.py:1934)
+2025-08-16 17:06:21,247 - ThreadPoolExecutor-1_1 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: INSERT INTO "sqlmesh__sqlmesh_example"."sqlmesh_example__incremental_model__3659766683" (
+  "id",
+  "item_id",
+  "event_date"
+)
+SELECT
+  "id",
+  "item_id",
+  "event_date"
+FROM (
+  SELECT
+    "seed_model"."id" AS "id",
+    "seed_model"."item_id" AS "item_id",
+    "seed_model"."event_date" AS "event_date"
+  FROM "analytics"."sqlmesh__sqlmesh_example"."sqlmesh_example__seed_model__2185867172" AS "seed_model"
+  WHERE
+    "seed_model"."event_date" <= CAST('2025-08-15' AS DATE)
+    AND "seed_model"."event_date" >= CAST('2025-08-14' AS DATE)
+) AS "_subquery"
+WHERE
+  "event_date" BETWEEN CAST('2025-08-14' AS DATE) AND CAST('2025-08-15' AS DATE) (base.py:2260)
+2025-08-16 17:06:21,249 - ThreadPoolExecutor-1_2 - sqlmesh.core.snapshot.evaluator - INFO - Skipping creation of the view 'analytics.sqlmesh__staging.staging__stg_events__167098314' (evaluator.py:1934)
+2025-08-16 17:06:21,251 - ThreadPoolExecutor-1_0 - sqlmesh.core.snapshot.evaluator - INFO - Auditing snapshot SnapshotId<"analytics"."staging"."stg_userss": 992809002> (evaluator.py:553)
+2025-08-16 17:06:21,256 - ThreadPoolExecutor-1_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0
+    AND NOT "attisdropped"
+    AND "relname" = 'staging__stg_userss__1393102477'
+  )
+  AND "nspname" = 'sqlmesh__staging' (base.py:2260)
+2025-08-16 17:06:21,256 - ThreadPoolExecutor-1_2 - sqlmesh.core.snapshot.evaluator - INFO - Auditing snapshot SnapshotId<"analytics"."staging"."stg_events": 2209255847> (evaluator.py:553)
+2025-08-16 17:06:21,265 - ThreadPoolExecutor-1_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0
+    AND NOT "attisdropped"
+    AND "relname" = 'staging__stg_events__167098314'
+  )
+  AND "nspname" = 'sqlmesh__staging' (base.py:2260)
+2025-08-16 17:06:21,265 - ThreadPoolExecutor-1_1 - sqlmesh.core.state_sync.db.facade - INFO - Adding interval (2025-08-14 00:00:00, 2025-08-16 00:00:00) for snapshot SnapshotId<"analytics"."sqlmesh_example"."incremental_model": 3025917805> (facade.py:619)
+2025-08-16 17:06:21,271 - ThreadPoolExecutor-1_1 - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."sqlmesh_example"."incremental_model": 3025917805> (interval.py:213)
+2025-08-16 17:06:21,272 - ThreadPoolExecutor-1_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  COUNT(*)
+FROM (
+  SELECT
+    *
+  FROM "analytics"."sqlmesh__staging"."staging__stg_userss__1393102477" AS "staging__stg_userss__1393102477"
+  WHERE
+    (
+      "user_id"
+    ) IS NULL AND TRUE
+) AS "audit" (base.py:2260)
+2025-08-16 17:06:21,288 - ThreadPoolExecutor-1_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  COUNT(*)
+FROM (
+  SELECT
+    *
+  FROM (
+    SELECT
+      ROW_NUMBER() OVER (PARTITION BY (
+        "event_id"
+      ) ORDER BY (
+        "event_id"
+      ) NULLS FIRST) AS "rank_"
+    FROM "analytics"."sqlmesh__staging"."staging__stg_events__167098314" AS "staging__stg_events__167098314"
+    WHERE
+      TRUE
+  ) AS "_q_0"
+  WHERE
+    "rank_" > 1
+) AS "audit" (base.py:2260)
+2025-08-16 17:06:21,299 - ThreadPoolExecutor-1_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0
+    AND NOT "attisdropped"
+    AND "relname" = 'staging__stg_userss__1393102477'
+  )
+  AND "nspname" = 'sqlmesh__staging' (base.py:2260)
+2025-08-16 17:06:21,303 - ThreadPoolExecutor-1_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0
+    AND NOT "attisdropped"
+    AND "relname" = 'staging__stg_events__167098314'
+  )
+  AND "nspname" = 'sqlmesh__staging' (base.py:2260)
+2025-08-16 17:06:21,316 - ThreadPoolExecutor-1_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  COUNT(*)
+FROM (
+  SELECT
+    *
+  FROM (
+    SELECT
+      ROW_NUMBER() OVER (PARTITION BY (
+        "user_id"
+      ) ORDER BY (
+        "user_id"
+      ) NULLS FIRST) AS "rank_"
+    FROM "analytics"."sqlmesh__staging"."staging__stg_userss__1393102477" AS "staging__stg_userss__1393102477"
+    WHERE
+      TRUE
+  ) AS "_q_0"
+  WHERE
+    "rank_" > 1
+) AS "audit" (base.py:2260)
+2025-08-16 17:06:21,324 - ThreadPoolExecutor-1_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  COUNT(*)
+FROM (
+  SELECT
+    *
+  FROM "analytics"."sqlmesh__staging"."staging__stg_events__167098314" AS "staging__stg_events__167098314"
+  WHERE
+    (
+      "event_id" IS NULL OR "user_id" IS NULL
+    ) AND TRUE
+) AS "audit" (base.py:2260)
+2025-08-16 17:06:21,345 - ThreadPoolExecutor-1_2 - sqlmesh.core.state_sync.db.facade - INFO - Adding interval (2025-08-15 00:00:00, 2025-08-16 00:00:00) for snapshot SnapshotId<"analytics"."staging"."stg_events": 2209255847> (facade.py:619)
+2025-08-16 17:06:21,345 - ThreadPoolExecutor-1_0 - sqlmesh.core.state_sync.db.facade - INFO - Adding interval (2025-08-15 00:00:00, 2025-08-16 00:00:00) for snapshot SnapshotId<"analytics"."staging"."stg_userss": 992809002> (facade.py:619)
+2025-08-16 17:06:21,346 - ThreadPoolExecutor-1_2 - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."staging"."stg_events": 2209255847> (interval.py:213)
+2025-08-16 17:06:21,346 - ThreadPoolExecutor-1_0 - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."staging"."stg_userss": 992809002> (interval.py:213)
+2025-08-16 17:06:21,355 - ThreadPoolExecutor-1_3 - sqlmesh.core.snapshot.evaluator - INFO - Evaluating snapshot SnapshotId<"analytics"."sqlmesh_example"."full_model": 4121470012> (evaluator.py:648)
+2025-08-16 17:06:21,367 - ThreadPoolExecutor-1_2 - sqlmesh.core.snapshot.evaluator - INFO - Evaluating snapshot SnapshotId<"analytics"."analytics"."daily_revenue": 3533829941> (evaluator.py:648)
+2025-08-16 17:06:21,502 - ThreadPoolExecutor-1_3 - sqlmesh.core.snapshot.evaluator - INFO - Inserting batch (2025-08-13 00:00:00, 2025-08-16 00:00:00) into analytics.sqlmesh__sqlmesh_example.sqlmesh_example__full_model__3968245968' (evaluator.py:703)
+2025-08-16 17:06:21,509 - ThreadPoolExecutor-1_3 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  1
+FROM "information_schema"."tables"
+WHERE
+  "table_name" = 'sqlmesh_example__full_model__3968245968'
+  AND "table_schema" = 'sqlmesh__sqlmesh_example' (base.py:2260)
+2025-08-16 17:06:21,511 - ThreadPoolExecutor-1_2 - sqlmesh.core.snapshot.evaluator - INFO - Inserting batch (2025-08-12 00:00:00, 2025-08-16 00:00:00) into analytics.sqlmesh__analytics.analytics__daily_revenue__276492176' (evaluator.py:703)
+2025-08-16 17:06:21,513 - ThreadPoolExecutor-1_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: DELETE FROM "sqlmesh__analytics"."analytics__daily_revenue__276492176"
+WHERE
+  "event_date" BETWEEN CAST('2025-08-12' AS DATE) AND CAST('2025-08-15' AS DATE) (base.py:2260)
+2025-08-16 17:06:21,517 - ThreadPoolExecutor-1_2 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: INSERT INTO "sqlmesh__analytics"."analytics__daily_revenue__276492176" (
+  "event_date",
+  "unique_users",
+  "total_revenue"
+)
+SELECT
+  "event_date",
+  "unique_users",
+  "total_revenue"
+FROM (
+  SELECT
+    "stg_events"."event_date" AS "event_date",
+    COUNT(DISTINCT "stg_events"."user_id") AS "unique_users",
+    COALESCE(
+      SUM(CASE WHEN "stg_events"."event_type" = 'purchase' THEN "stg_events"."revenue" END),
+      0
+    ) AS "total_revenue"
+  FROM "analytics"."sqlmesh__staging"."staging__stg_events__167098314" AS "stg_events"
+  WHERE
+    "stg_events"."event_date" < '2025-08-15'
+    AND "stg_events"."event_date" >= '2025-08-12'
+  GROUP BY
+    "stg_events"."event_date"
+) AS "_subquery"
+WHERE
+  "event_date" BETWEEN CAST('2025-08-12' AS DATE) AND CAST('2025-08-15' AS DATE) (base.py:2260)
+2025-08-16 17:06:21,517 - ThreadPoolExecutor-1_3 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: DELETE FROM "sqlmesh__sqlmesh_example"."sqlmesh_example__full_model__3968245968"
+WHERE
+  TRUE (base.py:2260)
+2025-08-16 17:06:21,520 - ThreadPoolExecutor-1_3 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: INSERT INTO "sqlmesh__sqlmesh_example"."sqlmesh_example__full_model__3968245968" (
+  "item_id",
+  "num_orders"
+)
+SELECT
+  "incremental_model"."item_id" AS "item_id",
+  COUNT(DISTINCT "incremental_model"."id") AS "num_orders"
+FROM "analytics"."sqlmesh__sqlmesh_example"."sqlmesh_example__incremental_model__3659766683" AS "incremental_model"
+GROUP BY
+  "incremental_model"."item_id" (base.py:2260)
+2025-08-16 17:06:21,520 - ThreadPoolExecutor-1_2 - sqlmesh.core.state_sync.db.facade - INFO - Adding interval (2025-08-12 00:00:00, 2025-08-16 00:00:00) for snapshot SnapshotId<"analytics"."analytics"."daily_revenue": 3533829941> (facade.py:619)
+2025-08-16 17:06:21,520 - ThreadPoolExecutor-1_2 - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."analytics"."daily_revenue": 3533829941> (interval.py:213)
+2025-08-16 17:06:21,525 - ThreadPoolExecutor-1_3 - sqlmesh.core.snapshot.evaluator - INFO - Auditing snapshot SnapshotId<"analytics"."sqlmesh_example"."full_model": 4121470012> (evaluator.py:553)
+2025-08-16 17:06:21,531 - ThreadPoolExecutor-1_3 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0
+    AND NOT "attisdropped"
+    AND "relname" = 'sqlmesh_example__full_model__3968245968'
+  )
+  AND "nspname" = 'sqlmesh__sqlmesh_example' (base.py:2260)
+2025-08-16 17:06:21,538 - ThreadPoolExecutor-1_3 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  COUNT(*)
+FROM (
+  SELECT
+    *
+  FROM "analytics"."sqlmesh__sqlmesh_example"."sqlmesh_example__full_model__3968245968" AS "sqlmesh_example__full_model__3968245968"
+  WHERE
+    "item_id" < 0
+) AS "audit" (base.py:2260)
+2025-08-16 17:06:21,542 - ThreadPoolExecutor-1_3 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0
+    AND NOT "attisdropped"
+    AND "relname" = 'sqlmesh_example__full_model__3968245968'
+  )
+  AND "nspname" = 'sqlmesh__sqlmesh_example' (base.py:2260)
+2025-08-16 17:06:21,550 - ThreadPoolExecutor-1_3 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  COUNT(*)
+FROM (
+  SELECT
+    *
+  FROM "analytics"."sqlmesh__sqlmesh_example"."sqlmesh_example__full_model__3968245968" AS "sqlmesh_example__full_model__3968245968"
+  WHERE
+    (
+      "item_id"
+    ) IS NULL AND TRUE
+) AS "audit" (base.py:2260)
+2025-08-16 17:06:21,554 - ThreadPoolExecutor-1_3 - sqlmesh.core.state_sync.db.facade - INFO - Adding interval (2025-08-13 00:00:00, 2025-08-16 00:00:00) for snapshot SnapshotId<"analytics"."sqlmesh_example"."full_model": 4121470012> (facade.py:619)
+2025-08-16 17:06:21,554 - ThreadPoolExecutor-1_3 - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."sqlmesh_example"."full_model": 4121470012> (interval.py:213)
+2025-08-16 17:06:21,566 - ThreadPoolExecutor-1_3 - sqlmesh.core.snapshot.evaluator - INFO - Evaluating snapshot SnapshotId<"analytics"."sqlmesh_example"."new_model": 435915384> (evaluator.py:648)
+2025-08-16 17:06:21,572 - ThreadPoolExecutor-1_3 - sqlmesh.core.snapshot.evaluator - INFO - Inserting batch (2025-08-13 00:00:00, 2025-08-16 00:00:00) into analytics.sqlmesh__sqlmesh_example.sqlmesh_example__new_model__1686394361' (evaluator.py:703)
+2025-08-16 17:06:21,573 - ThreadPoolExecutor-1_3 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  1
+FROM "information_schema"."tables"
+WHERE
+  "table_name" = 'sqlmesh_example__new_model__1686394361'
+  AND "table_schema" = 'sqlmesh__sqlmesh_example' (base.py:2260)
+2025-08-16 17:06:21,576 - ThreadPoolExecutor-1_3 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: DELETE FROM "sqlmesh__sqlmesh_example"."sqlmesh_example__new_model__1686394361"
+WHERE
+  TRUE (base.py:2260)
+2025-08-16 17:06:21,580 - ThreadPoolExecutor-1_3 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: INSERT INTO "sqlmesh__sqlmesh_example"."sqlmesh_example__new_model__1686394361" (
+  "item_id",
+  "num_orders",
+  "half"
+)
+SELECT
+  "full_model"."item_id" AS "item_id",
+  "full_model"."num_orders" AS "num_orders",
+  "full_model"."num_orders" / 2 AS "half"
+FROM "analytics"."sqlmesh__sqlmesh_example"."sqlmesh_example__full_model__3968245968" AS "full_model" (base.py:2260)
+2025-08-16 17:06:21,583 - ThreadPoolExecutor-1_3 - sqlmesh.core.state_sync.db.facade - INFO - Adding interval (2025-08-13 00:00:00, 2025-08-16 00:00:00) for snapshot SnapshotId<"analytics"."sqlmesh_example"."new_model": 435915384> (facade.py:619)
+2025-08-16 17:06:21,583 - ThreadPoolExecutor-1_3 - sqlmesh.core.state_sync.db.interval - INFO - Pushing intervals for snapshot SnapshotId<"analytics"."sqlmesh_example"."new_model": 435915384> (interval.py:213)
+2025-08-16 17:06:21,595 - MainThread - root - INFO - Shutting down the event dispatcher (dispatcher.py:159)

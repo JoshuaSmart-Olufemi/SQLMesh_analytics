@@ -1,0 +1,377 @@
+2025-08-16 18:18:28,819 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Auditing snapshot SnapshotId<"analytics"."sqlmesh_example"."full_model": 4121470012> (evaluator.py:553)
+2025-08-16 18:18:28,862 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0
+    AND NOT "attisdropped"
+    AND "relname" = 'sqlmesh_example__full_model__3968245968'
+  )
+  AND "nspname" = 'sqlmesh__sqlmesh_example' (base.py:2260)
+2025-08-16 18:18:28,882 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  COUNT(*)
+FROM (
+  SELECT
+    *
+  FROM "analytics"."sqlmesh__sqlmesh_example"."sqlmesh_example__full_model__3968245968" AS "sqlmesh_example__full_model__3968245968"
+  WHERE
+    "item_id" < 0
+) AS "audit" (base.py:2260)
+2025-08-16 18:18:28,888 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0
+    AND NOT "attisdropped"
+    AND "relname" = 'sqlmesh_example__full_model__3968245968'
+  )
+  AND "nspname" = 'sqlmesh__sqlmesh_example' (base.py:2260)
+2025-08-16 18:18:28,899 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  COUNT(*)
+FROM (
+  SELECT
+    *
+  FROM "analytics"."sqlmesh__sqlmesh_example"."sqlmesh_example__full_model__3968245968" AS "sqlmesh_example__full_model__3968245968"
+  WHERE
+    (
+      "item_id"
+    ) IS NULL AND TRUE
+) AS "audit" (base.py:2260)
+2025-08-16 18:18:28,905 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Auditing snapshot SnapshotId<"analytics"."staging"."stg_customer_segments": 4089766744> (evaluator.py:553)
+2025-08-16 18:18:28,976 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0
+    AND NOT "attisdropped"
+    AND "relname" = 'staging__stg_customer_segments__4008439995'
+  )
+  AND "nspname" = 'sqlmesh__staging' (base.py:2260)
+2025-08-16 18:18:28,986 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  COUNT(*)
+FROM (
+  SELECT
+    *
+  FROM "analytics"."sqlmesh__staging"."staging__stg_customer_segments__4008439995" AS "staging__stg_customer_segments__4008439995"
+  WHERE
+    (
+      "segment_id"
+    ) IS NULL AND TRUE
+) AS "audit" (base.py:2260)
+2025-08-16 18:18:28,991 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Auditing snapshot SnapshotId<"analytics"."staging"."stg_events": 2209255847> (evaluator.py:553)
+2025-08-16 18:18:28,994 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0
+    AND NOT "attisdropped"
+    AND "relname" = 'staging__stg_events__167098314'
+  )
+  AND "nspname" = 'sqlmesh__staging' (base.py:2260)
+2025-08-16 18:18:29,020 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  COUNT(*)
+FROM (
+  SELECT
+    *
+  FROM (
+    SELECT
+      ROW_NUMBER() OVER (PARTITION BY (
+        "event_id"
+      ) ORDER BY (
+        "event_id"
+      ) NULLS FIRST) AS "rank_"
+    FROM "analytics"."sqlmesh__staging"."staging__stg_events__167098314" AS "staging__stg_events__167098314"
+    WHERE
+      TRUE
+  ) AS "_q_0"
+  WHERE
+    "rank_" > 1
+) AS "audit" (base.py:2260)
+2025-08-16 18:18:29,027 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0
+    AND NOT "attisdropped"
+    AND "relname" = 'staging__stg_events__167098314'
+  )
+  AND "nspname" = 'sqlmesh__staging' (base.py:2260)
+2025-08-16 18:18:29,039 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  COUNT(*)
+FROM (
+  SELECT
+    *
+  FROM "analytics"."sqlmesh__staging"."staging__stg_events__167098314" AS "staging__stg_events__167098314"
+  WHERE
+    (
+      "event_id" IS NULL OR "user_id" IS NULL
+    ) AND TRUE
+) AS "audit" (base.py:2260)
+2025-08-16 18:18:29,043 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Auditing snapshot SnapshotId<"analytics"."staging"."stg_orders": 2186219172> (evaluator.py:553)
+2025-08-16 18:18:29,047 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0
+    AND NOT "attisdropped"
+    AND "relname" = 'staging__stg_orders__4069310843'
+  )
+  AND "nspname" = 'sqlmesh__staging' (base.py:2260)
+2025-08-16 18:18:29,062 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  COUNT(*)
+FROM (
+  SELECT
+    *
+  FROM "analytics"."sqlmesh__staging"."staging__stg_orders__4069310843" AS "staging__stg_orders__4069310843"
+  WHERE
+    (
+      "order_id"
+    ) IS NULL AND TRUE
+) AS "audit" (base.py:2260)
+2025-08-16 18:18:29,068 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0
+    AND NOT "attisdropped"
+    AND "relname" = 'staging__stg_orders__4069310843'
+  )
+  AND "nspname" = 'sqlmesh__staging' (base.py:2260)
+2025-08-16 18:18:29,080 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  COUNT(*)
+FROM (
+  SELECT
+    *
+  FROM (
+    SELECT
+      ROW_NUMBER() OVER (PARTITION BY (
+        "order_id"
+      ) ORDER BY (
+        "order_id"
+      ) NULLS FIRST) AS "rank_"
+    FROM "analytics"."sqlmesh__staging"."staging__stg_orders__4069310843" AS "staging__stg_orders__4069310843"
+    WHERE
+      TRUE
+  ) AS "_q_0"
+  WHERE
+    "rank_" > 1
+) AS "audit" (base.py:2260)
+2025-08-16 18:18:29,083 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Auditing snapshot SnapshotId<"analytics"."staging"."stg_order_items": 4198097237> (evaluator.py:553)
+2025-08-16 18:18:29,086 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0
+    AND NOT "attisdropped"
+    AND "relname" = 'staging__stg_order_items__665358577'
+  )
+  AND "nspname" = 'sqlmesh__staging' (base.py:2260)
+2025-08-16 18:18:29,098 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  COUNT(*)
+FROM (
+  SELECT
+    *
+  FROM "analytics"."sqlmesh__staging"."staging__stg_order_items__665358577" AS "staging__stg_order_items__665358577"
+  WHERE
+    (
+      "order_item_id"
+    ) IS NULL AND TRUE
+) AS "audit" (base.py:2260)
+2025-08-16 18:18:29,102 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Auditing snapshot SnapshotId<"analytics"."staging"."stg_products": 469018842> (evaluator.py:553)
+2025-08-16 18:18:29,105 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0
+    AND NOT "attisdropped"
+    AND "relname" = 'staging__stg_products__3764744303'
+  )
+  AND "nspname" = 'sqlmesh__staging' (base.py:2260)
+2025-08-16 18:18:29,117 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  COUNT(*)
+FROM (
+  SELECT
+    *
+  FROM "analytics"."sqlmesh__staging"."staging__stg_products__3764744303" AS "staging__stg_products__3764744303"
+  WHERE
+    (
+      "product_id"
+    ) IS NULL AND TRUE
+) AS "audit" (base.py:2260)
+2025-08-16 18:18:29,124 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0
+    AND NOT "attisdropped"
+    AND "relname" = 'staging__stg_products__3764744303'
+  )
+  AND "nspname" = 'sqlmesh__staging' (base.py:2260)
+2025-08-16 18:18:29,136 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  COUNT(*)
+FROM (
+  SELECT
+    *
+  FROM (
+    SELECT
+      ROW_NUMBER() OVER (PARTITION BY (
+        "product_id"
+      ) ORDER BY (
+        "product_id"
+      ) NULLS FIRST) AS "rank_"
+    FROM "analytics"."sqlmesh__staging"."staging__stg_products__3764744303" AS "staging__stg_products__3764744303"
+    WHERE
+      TRUE
+  ) AS "_q_0"
+  WHERE
+    "rank_" > 1
+) AS "audit" (base.py:2260)
+2025-08-16 18:18:29,138 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Auditing snapshot SnapshotId<"analytics"."staging"."stg_sellers": 867275013> (evaluator.py:553)
+2025-08-16 18:18:29,142 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0
+    AND NOT "attisdropped"
+    AND "relname" = 'staging__stg_sellers__3172254506'
+  )
+  AND "nspname" = 'sqlmesh__staging' (base.py:2260)
+2025-08-16 18:18:29,154 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  COUNT(*)
+FROM (
+  SELECT
+    *
+  FROM "analytics"."sqlmesh__staging"."staging__stg_sellers__3172254506" AS "staging__stg_sellers__3172254506"
+  WHERE
+    (
+      "seller_id"
+    ) IS NULL AND TRUE
+) AS "audit" (base.py:2260)
+2025-08-16 18:18:29,158 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Auditing snapshot SnapshotId<"analytics"."staging"."stg_userss": 992809002> (evaluator.py:553)
+2025-08-16 18:18:29,161 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0
+    AND NOT "attisdropped"
+    AND "relname" = 'staging__stg_userss__1393102477'
+  )
+  AND "nspname" = 'sqlmesh__staging' (base.py:2260)
+2025-08-16 18:18:29,173 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  COUNT(*)
+FROM (
+  SELECT
+    *
+  FROM "analytics"."sqlmesh__staging"."staging__stg_userss__1393102477" AS "staging__stg_userss__1393102477"
+  WHERE
+    (
+      "user_id"
+    ) IS NULL AND TRUE
+) AS "audit" (base.py:2260)
+2025-08-16 18:18:29,179 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  "attname" AS "column_name",
+  "pg_catalog".format_type("atttypid", "atttypmod") AS "data_type"
+FROM "pg_catalog"."pg_attribute"
+JOIN "pg_catalog"."pg_class"
+  ON "pg_class"."oid" = "attrelid"
+JOIN "pg_catalog"."pg_namespace"
+  ON "pg_namespace"."oid" = "relnamespace"
+WHERE
+  (
+    "attnum" > 0
+    AND NOT "attisdropped"
+    AND "relname" = 'staging__stg_userss__1393102477'
+  )
+  AND "nspname" = 'sqlmesh__staging' (base.py:2260)
+2025-08-16 18:18:29,190 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: SELECT
+  COUNT(*)
+FROM (
+  SELECT
+    *
+  FROM (
+    SELECT
+      ROW_NUMBER() OVER (PARTITION BY (
+        "user_id"
+      ) ORDER BY (
+        "user_id"
+      ) NULLS FIRST) AS "rank_"
+    FROM "analytics"."sqlmesh__staging"."staging__stg_userss__1393102477" AS "staging__stg_userss__1393102477"
+    WHERE
+      TRUE
+  ) AS "_q_0"
+  WHERE
+    "rank_" > 1
+) AS "audit" (base.py:2260)
+2025-08-16 18:18:29,195 - MainThread - root - INFO - Shutting down the event dispatcher (dispatcher.py:159)
