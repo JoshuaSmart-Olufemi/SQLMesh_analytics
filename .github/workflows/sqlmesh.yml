@@ -13,22 +13,20 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.11"
-
+      # Ensure pip is up to date and install dependencies with Python 3.11
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
-          pip install sqlmesh==0.209.0
+          python3.11 -m pip install --upgrade pip
+          python3.11 -m pip install sqlmesh==0.209.0
 
+      # Run SQLMesh Plan
       - name: Run SQLMesh Plan
         working-directory: /mnt/c/Users/josh/analytics
         run: |
-          sqlmesh plan staging --no-prompts --skip-backfill --verbose
+          python3.11 -m sqlmesh plan staging --no-prompts --skip-backfill --verbose
 
+      # Run SQLMesh Tests
       - name: Run SQLMesh Tests
         working-directory: /mnt/c/Users/josh/analytics
         run: |
-          sqlmesh test
+          python3.11 -m sqlmesh test
