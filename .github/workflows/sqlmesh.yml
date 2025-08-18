@@ -8,25 +8,24 @@ on:
     branches: [ "main" ]
 
 jobs:
-  sqlmesh:
+  # ---------------------
+  # Common setup (reusable job)
+  # ---------------------
+  setup:
     runs-on: self-hosted
-    timeout-minutes: 20   # ✅ prevent infinite hangs
+    timeout-minutes: 20
+    outputs:
+      python-version: ${{ steps.set-python.outputs.version }}
     strategy:
       matrix:
         python-version: ["3.10"]
-
-    env:
-      POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
-      POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
-      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
 
       - name: Set up Python ${{ matrix.python-version }}
+        id: set-python
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
@@ -44,39 +43,78 @@ jobs:
           python -m pip install --upgrade pip
           pip install "sqlmesh[web,postgres,github]>=0.50.0,<0.60.0"
 
-      # ---------------------
-      # Validation on PRs (Dynamic Staging Schema)
-      # ---------------------
-      - name: Run SQLMesh plan on Dynamic Staging
-        if: github.event_name == 'pull_request' && github.event.action != 'closed'
-        env:
-          SCHEMA: staging_${{ github.event.pull_request.number }}
-        run: |
-          sqlmesh plan --environment staging --no-prompts --skip-backfill --verbose --create-pr-comment
+  # ---------------------
+  # Run SQLMesh plan (staging) in PRs
+  # ---------------------
+  plan:
+    needs: setup
+    runs-on: self-hosted
+    timeout-minutes: 20
+    env:
+      POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+      POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+      SCHEMA: staging_${{ github.event.pull_request.number }}
+    if: github.event_name == 'pull_request' && github.event.action != 'closed'
+    steps:
+      - uses: actions/checkout@v3
+      - run: sqlmesh plan --environment staging --no-prompts --skip-backfill --verbose --create-pr-comment
 
-      - name: Run SQLMesh tests (Dynamic Staging)
-        if: github.event_name == 'pull_request' && github.event.action != 'closed'
-        env:
-          SCHEMA: staging_${{ github.event.pull_request.number }}
-        run: sqlmesh test --environment staging --verbose
+  # ---------------------
+  # Run SQLMesh tests (staging) in PRs
+  # ---------------------
+  test:
+    needs: setup
+    runs-on: self-hosted
+    timeout-minutes: 20
+    env:
+      POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+      POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+      SCHEMA: staging_${{ github.event.pull_request.number }}
+    if: github.event_name == 'pull_request' && github.event.action != 'closed'
+    steps:
+      - uses: actions/checkout@v3
+      - run: sqlmesh test --environment staging --verbose
 
-      # ---------------------
-      # Cleanup Staging Schema when PR is closed
-      # ---------------------
-      - name: Drop staging schema for closed PR
-        if: github.event_name == 'pull_request' && github.event.action == 'closed'
-        env:
-          SCHEMA: staging_${{ github.event.pull_request.number }}
-        run: |
+  # ---------------------
+  # Cleanup staging schema when PR is closed
+  # ---------------------
+  cleanup:
+    runs-on: self-hosted
+    timeout-minutes: 10
+    env:
+      POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+      POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+      SCHEMA: staging_${{ github.event.pull_request.number }}
+    if: github.event_name == 'pull_request' && github.event.action == 'closed'
+    steps:
+      - run: |
           psql "host=$POSTGRES_HOST port=$POSTGRES_PORT dbname=$POSTGRES_DB user=$POSTGRES_USER password=$POSTGRES_PASSWORD" \
           -c "DROP SCHEMA IF EXISTS $SCHEMA CASCADE;"
 
-      # ---------------------
-      # Deployment on merge to main (Production)
-      # ---------------------
-      - name: Apply SQLMesh changes on Production
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && success()
-        env:
-          SCHEMA: public
-        run: |
-          sqlmesh plan --environment prod --no-prompts --skip-backfill --verbose --auto-apply
+  # ---------------------
+  # Deploy to Production when merged into main
+  # ---------------------
+  deploy:
+    needs: setup
+    runs-on: self-hosted
+    timeout-minutes: 20
+    env:
+      POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
+      POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
+      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+      SCHEMA: public
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && success()
+    steps:
+      - uses: actions/checkout@v3
+      - run: sqlmesh plan --environment prod --no-prompts --skip-backfill --verbose --auto-apply
