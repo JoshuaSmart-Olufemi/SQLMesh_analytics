@@ -2,33 +2,37 @@ name: SQLMesh CI
 
 on:
   push:
-    branches: ["main", "ft/dev"]
+    branches: [ "main", "ft/dev" ]
   pull_request:
-    branches: ["main", "ft/dev"]
+    branches: [ "main", "ft/dev" ]
 
 jobs:
   sqlmesh:
     runs-on: ubuntu-latest
-    env:
-      SQLMESH__POSTGRES__URL: postgresql://postgres:postgres@172.20.0.1:5432/analytics
 
     steps:
-      - name: Checkout repo
+      # 1. Checkout the branch to get the latest config.yaml
+      - name: Checkout repository
         uses: actions/checkout@v3
 
+      # 2. Set up Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
 
-      - name: Install SQLMesh with Postgres
+      # 3. Install SQLMesh with PostgreSQL support
+      - name: Install SQLMesh
         run: pip install "sqlmesh[postgres]"
 
+      # 4. Run SQLMesh Lint
       - name: Run SQLMesh Lint
         run: sqlmesh lint --verbose
 
+      # 5. Plan for staging
       - name: Run SQLMesh Plan (staging)
         run: sqlmesh plan staging --no-prompts --skip-backfill --verbose
 
+      # 6. Apply changes to staging
       - name: Run SQLMesh Apply (staging)
         run: sqlmesh apply staging --verbose
