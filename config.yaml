@@ -1,43 +1,23 @@
 # --- Gateway Connection ---
 gateways:
-  postgres:
+  default:
     connection:
-      # For more information on configuring the connection to your execution engine, visit:
-      # https://sqlmesh.readthedocs.io/en/stable/reference/configuration/#connection
-      # https://sqlmesh.readthedocs.io/en/stable/integrations/engines/postgres/#connection-options
-      type: postgres
-      host: 172.20.0.1
-      user: postgres
-      password: postgres
-      port: 5432
-      database: analytics
-      concurrent_tasks: 4
-      # register_comments: True
-      # pre_ping: True
-      pretty_sql: True
-      # keepalives_idle: 
-      connect_timeout: 20
-      # role: 
-      # sslmode: 
-      # application_name: 
+      url: "postgresql://postgres:postgres@172.20.0.1:5432/analytics"
 
-default_gateway: postgres
+default_gateway: default
 
 # --- Model Defaults ---
-# https://sqlmesh.readthedocs.io/en/stable/reference/model_configuration/#model-defaults
-
 model_defaults:
   dialect: postgres
-  start: 2025-08-10 # Start date for backfill history
-  cron: '@daily'    # Run models daily at 12am UTC (can override per model)
+  start: 2025-08-10
+  cron: '@daily'
 
 # --- Linting Rules ---
-# Enforce standards for your team
-# https://sqlmesh.readthedocs.io/en/stable/guides/linter/
-
-
 linter:
   enabled: true
   rules:
     - ambiguousorinvalidcolumn
     - invalidselectstarexpansion
+
+
+
