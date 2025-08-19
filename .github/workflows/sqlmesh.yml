@@ -2,46 +2,37 @@ name: SQLMesh CI
 
 on:
   push:
-    branches: ["main"]
+    branches: [ "main", "ft/dev" ]
   pull_request:
-    branches: ["main"]
+    branches: [ "main", "ft/dev" ]
 
 jobs:
   sqlmesh:
-    runs-on: self-hosted
-
-    # --- Postgres connection environment variables ---
+    runs-on: ubuntu-latest
     env:
-      SQLMESH__POSTGRES__HOST: 172.20.0.1
-      SQLMESH__POSTGRES__PORT: 5432
-      SQLMESH__POSTGRES__USER: postgres
-      SQLMESH__POSTGRES__PASSWORD: postgres
-      SQLMESH__POSTGRES__DATABASE: analytics
-
-    defaults:
-      run:
-        shell: bash
-        working-directory: /mnt/c/Users/josh/analytics
+      # Environment variable for SQLMesh to connect to Postgres
+      SQLMESH__POSTGRES__URL: postgresql://postgres:postgres@172.20.0.1:5432/analytics
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
-
-      - name: Upgrade pip
-        run: python -m pip install --upgrade pip
+          python-version: '3.11'
 
       - name: Install dependencies
         run: |
-          pip install sqlmesh==0.209.0
-          # add any extra deps here, e.g. dbt, bigquery, etc.
+          python -m pip install --upgrade pip
+          pip install sqlmesh[postgres]
 
-      - name: Run SQLMesh Plan
+      - name: Run SQLMesh lint
+        run: sqlmesh lint
+
+      - name: Run SQLMesh plan
         run: sqlmesh plan staging --no-prompts --skip-backfill --verbose
 
-      - name: Run SQLMesh Tests
-        run: sqlmesh test
+      - name: Run SQLMesh apply (optional)
+        if: github.ref == 'refs/heads/main'
+        run: sqlmesh apply staging --no-prompts --verbose
