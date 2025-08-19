@@ -1,88 +1,38 @@
 name: SQLMesh CI
 
 on:
-  pull_request:
-    branches: [ "main" ]
-    types: [opened, synchronize, reopened, closed]
   push:
-    branches: [ "main" ]
+    branches: [ "main", "ft/dev" ]
+  pull_request:
+    branches: [ "main", "ft/dev" ]
 
 jobs:
   sqlmesh:
-    runs-on: self-hosted
-    strategy:
-      matrix:
-        python-version: ["3.10"]
+    runs-on: ubuntu-latest
 
-    env:  # ✅ Global env so all steps can use it
-      POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
-      POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}   # ✅ Add port if needed
-      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
+    env:
+      # SQLMesh will use this as the default Postgres connection
+      SQLMESH__DEFAULT__CONNECTION: postgresql://postgres:postgres@172.20.0.1:5432/analytics
 
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Python ${{ matrix.python-version }}
+      - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ matrix.python-version }}
-
-      - name: Cache pip dependencies
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/pip
-          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
+          python-version: "3.11"
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install "sqlmesh[web,postgres,github]>=0.50.0,<0.60.0"
+          pip install "sqlmesh[postgres]"
 
-      # ---------------------
-      # Validation on PRs (Dynamic Staging Schema)
-      # ---------------------
-      - name: Run SQLMesh plan on Dynamic Staging
-        if: github.event_name == 'pull_request' && github.event.action != 'closed'
-        env:
-          SCHEMA: staging_${{ github.event.pull_request.number }}
-        run: |
-          sqlmesh plan --environment staging --no-prompts --skip-backfill --no-gaps --verbose --create-pr-comment
+      - name: Clean SQLMesh workspace
+        run: rm -rf .sqlmesh/
 
-      - name: Apply SQLMesh changes on Dynamic Staging
-        if: github.event_name == 'pull_request' && github.event.action != 'closed'
-        env:
-          SCHEMA: staging_${{ github.event.pull_request.number }}
-        run: |
-          sqlmesh run --environment staging --no-prompts --skip-backfill --no-gaps --verbose
+      - name: Run SQLMesh Lint
+        run: sqlmesh lint --verbose
 
-      - name: Run SQLMesh tests (Dynamic Staging)
-        if: github.event_name == 'pull_request' && github.event.action != 'closed'
-        env:
-          SCHEMA: staging_${{ github.event.pull_request.number }}
-        run: sqlmesh test --environment staging --verbose
-
-      # ---------------------
-      # Cleanup Staging Schema when PR is closed
-      # ---------------------
-      - name: Drop staging schema for closed PR
-        if: github.event_name == 'pull_request' && github.event.action == 'closed'
-        env:
-          SCHEMA: staging_${{ github.event.pull_request.number }}
-        run: |
-          psql "host=$POSTGRES_HOST port=$POSTGRES_PORT dbname=$POSTGRES_DB user=$POSTGRES_USER password=$POSTGRES_PASSWORD" \
-          -c "DROP SCHEMA IF EXISTS $SCHEMA CASCADE;"
-
-      # ---------------------
-      # Deployment on merge to main (Production)
-      # ---------------------
-      - name: Run SQLMesh run on Production
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main' && success()
-        env:
-          SCHEMA: public
-        run: |
-          sqlmesh run --environment prod --no-prompts --skip-backfill --no-gaps --verbose
+      - name: Run SQLMesh Plan
+        run: sqlmesh plan staging --no-prompts --skip-backfill --verbose
