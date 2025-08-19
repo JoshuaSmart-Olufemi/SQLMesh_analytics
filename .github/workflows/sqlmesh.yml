@@ -10,13 +10,12 @@ jobs:
   sqlmesh:
     runs-on: self-hosted
 
-    # Set Postgres env vars for all steps in this job
     env:
-      SQLMESH__POSTGRES__HOST: ${{ secrets.POSTGRES_HOST }}
-      SQLMESH__POSTGRES__PORT: ${{ secrets.POSTGRES_PORT }}
-      SQLMESH__POSTGRES__DBNAME: ${{ secrets.POSTGRES_DB }}
-      SQLMESH__POSTGRES__USER: ${{ secrets.POSTGRES_USER }}
-      SQLMESH__POSTGRES__PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+      SQLMESH__POSTGRES__HOST: 172.20.0.1
+      SQLMESH__POSTGRES__PORT: 5432
+      SQLMESH__POSTGRES__USER: postgres
+      SQLMESH__POSTGRES__PASSWORD: postgres
+      SQLMESH__POSTGRES__DATABASE: analytics
 
     defaults:
       run:
@@ -37,8 +36,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install "sqlmesh[postgres]==0.209.0"
-          # add any extra dependencies here, e.g., dbt, bigquery, etc.
+          pip install sqlmesh==0.209.0
+          # add any extra deps here, e.g. dbt, bigquery, etc.
 
       - name: Run SQLMesh Plan
         run: sqlmesh plan staging --no-prompts --skip-backfill --verbose
