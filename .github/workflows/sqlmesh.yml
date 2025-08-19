@@ -9,13 +9,11 @@ on:
 jobs:
   sqlmesh:
     runs-on: ubuntu-latest
-
     env:
-      # SQLMesh will use this as the default Postgres connection
-      SQLMESH__DEFAULT__CONNECTION: postgresql://postgres:postgres@172.20.0.1:5432/analytics
+      SQLMESH__POSTGRES__URL: postgresql://postgres:postgres@172.20.0.1:5432/analytics
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v3
 
       - name: Set up Python
@@ -23,16 +21,14 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install "sqlmesh[postgres]"
-
-      - name: Clean SQLMesh workspace
-        run: rm -rf .sqlmesh/
+      - name: Install SQLMesh
+        run: pip install "sqlmesh[postgres]"
 
       - name: Run SQLMesh Lint
         run: sqlmesh lint --verbose
 
-      - name: Run SQLMesh Plan
+      - name: Run SQLMesh Plan (staging)
         run: sqlmesh plan staging --no-prompts --skip-backfill --verbose
+
+      - name: Run SQLMesh Apply (staging)
+        run: sqlmesh apply staging --verbose
