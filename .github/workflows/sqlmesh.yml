@@ -2,9 +2,9 @@ name: SQLMesh CI
 
 on:
   push:
-    branches: [ "main", "ft/dev" ]
+    branches: ["main", "ft/dev"]
   pull_request:
-    branches: [ "main", "ft/dev" ]
+    branches: ["main", "ft/dev"]
 
 jobs:
   sqlmesh:
@@ -21,7 +21,7 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Install SQLMesh
+      - name: Install SQLMesh with Postgres
         run: pip install "sqlmesh[postgres]"
 
       - name: Run SQLMesh Lint
