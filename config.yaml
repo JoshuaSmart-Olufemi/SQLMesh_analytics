@@ -1,15 +1,16 @@
 # --- Gateway Connection ---
 gateways:
   default:
+    type: postgres
     connection: "postgresql://postgres:postgres@172.20.0.1:5432/analytics"
 
 default_gateway: default
 
 # --- Model Defaults ---
 model_defaults:
-  dialect: postgres        # SQL dialect
-  start: 2025-08-10        # Start date for backfill history
-  cron: '@daily'           # Default schedule for models (can override per model)
+  dialect: postgres
+  start: 2025-08-10
+  cron: '@daily'
 
 # --- Linting Rules ---
 linter:
@@ -17,6 +18,7 @@ linter:
   rules:
     - ambiguousorinvalidcolumn
     - invalidselectstarexpansion
+
 
 
 
