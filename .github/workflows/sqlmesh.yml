@@ -1,32 +1,39 @@
 name: SQLMesh CI
 
 on:
-  pull_request:
-    branches: [ "main" ]
   push:
-    branches: [ "main" ]
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
 
 jobs:
   sqlmesh:
     runs-on: self-hosted
+
+    defaults:
+      run:
+        shell: bash
+        working-directory: /mnt/c/Users/josh/analytics
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      # Ensure pip is up to date and install dependencies with Python 3.11
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Upgrade pip
+        run: python -m pip install --upgrade pip
+
       - name: Install dependencies
         run: |
-          python3.11 -m pip install --upgrade pip
-          python3.11 -m pip install sqlmesh==0.209.0
+          pip install sqlmesh==0.209.0
+          # add any extra deps here, e.g. dbt, bigquery, etc.
 
-      # Run SQLMesh Plan
       - name: Run SQLMesh Plan
-        working-directory: /mnt/c/Users/josh/analytics
-        run: |
-          python3.11 -m sqlmesh plan staging --no-prompts --skip-backfill --verbose
+        run: sqlmesh plan staging --no-prompts --skip-backfill --verbose
 
-      # Run SQLMesh Tests
       - name: Run SQLMesh Tests
-        working-directory: /mnt/c/Users/josh/analytics
-        run: |
-          python3.11 -m sqlmesh test
+        run: sqlmesh test
