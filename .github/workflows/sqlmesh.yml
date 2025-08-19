@@ -10,6 +10,7 @@ jobs:
   sqlmesh:
     runs-on: self-hosted
 
+    # --- Postgres connection environment variables ---
     env:
       SQLMESH__POSTGRES__HOST: 172.20.0.1
       SQLMESH__POSTGRES__PORT: 5432
