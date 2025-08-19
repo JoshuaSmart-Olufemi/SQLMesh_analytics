@@ -10,6 +10,14 @@ jobs:
   sqlmesh:
     runs-on: self-hosted
 
+    # Set Postgres env vars for all steps in this job
+    env:
+      SQLMESH__POSTGRES__HOST: ${{ secrets.POSTGRES_HOST }}
+      SQLMESH__POSTGRES__PORT: ${{ secrets.POSTGRES_PORT }}
+      SQLMESH__POSTGRES__DBNAME: ${{ secrets.POSTGRES_DB }}
+      SQLMESH__POSTGRES__USER: ${{ secrets.POSTGRES_USER }}
+      SQLMESH__POSTGRES__PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+
     defaults:
       run:
         shell: bash
@@ -27,46 +35,10 @@ jobs:
       - name: Upgrade pip
         run: python -m pip install --upgrade pip
 
-      - name: Install SQLMesh with Postgres
+      - name: Install dependencies
         run: |
           pip install "sqlmesh[postgres]==0.209.0"
-          # add any other dependencies here, e.g. dbt, bigquery, etc.
-
-      - name: Set Postgres environment variables for SQLMesh
-        env:
-          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }}
-          POSTGRES_PORT: ${{ secrets.POSTGRES_PORT }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-        run: |
-          export SQLMESH__POSTGRES__HOST=$POSTGRES_HOST
-          export SQLMESH__POSTGRES__PORT=$POSTGRES_PORT
-          export SQLMESH__POSTGRES__DBNAME=$POSTGRES_DB
-          export SQLMESH__POSTGRES__USER=$POSTGRES_USER
-          export SQLMESH__POSTGRES__PASSWORD=$POSTGRES_PASSWORD
-          echo "✅ SQLMesh Postgres environment variables set"
-
-      - name: Verify Postgres connectivity
-        run: |
-          python - <<EOF
-          import psycopg2
-          import os
-
-          try:
-              conn = psycopg2.connect(
-                  host=os.environ["SQLMESH__POSTGRES__HOST"],
-                  port=os.environ["SQLMESH__POSTGRES__PORT"],
-                  dbname=os.environ["SQLMESH__POSTGRES__DBNAME"],
-                  user=os.environ["SQLMESH__POSTGRES__USER"],
-                  password=os.environ["SQLMESH__POSTGRES__PASSWORD"]
-              )
-              conn.close()
-              print("✅ Postgres connection successful!")
-          except Exception as e:
-              print("❌ Postgres connection failed:", e)
-              exit(1)
-          EOF
+          # add any extra dependencies here, e.g., dbt, bigquery, etc.
 
       - name: Run SQLMesh Plan
         run: sqlmesh plan staging --no-prompts --skip-backfill --verbose
