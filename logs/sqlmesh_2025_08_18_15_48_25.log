@@ -1,0 +1,46 @@
+2025-08-18 15:49:05,214 - MainThread - sqlmesh.core.config.connection - INFO - Creating new DuckDB adapter for in-memory database (connection.py:483)
+2025-08-18 15:53:37,457 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage CreateSnapshotRecordsStage (evaluator.py:125)
+2025-08-18 15:53:37,519 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage PhysicalLayerUpdateStage (evaluator.py:125)
+2025-08-18 15:53:37,523 - ThreadPoolExecutor-1_0 - sqlmesh.core.snapshot.evaluator - INFO - Listing data objects in schema analytics.sqlmesh__staging (evaluator.py:361)
+2025-08-18 15:53:37,629 - ThreadPoolExecutor-1_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 1b3052d5e6584ca28c793fcd50e747d4 */ SELECT
+  current_catalog (base.py:2260)
+2025-08-18 15:53:37,664 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Creating schema 'analytics.sqlmesh__staging' (evaluator.py:1180)
+2025-08-18 15:53:37,762 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 1b3052d5e6584ca28c793fcd50e747d4 */ CREATE SCHEMA IF NOT EXISTS "sqlmesh__staging" (base.py:2260)
+2025-08-18 15:53:37,851 - ThreadPoolExecutor-2_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 1b3052d5e6584ca28c793fcd50e747d4 */ SELECT
+  1
+FROM "information_schema"."tables"
+WHERE
+  "table_name" = 'staging__stg_product_reviews__3262406446'
+  AND "table_schema" = 'sqlmesh__staging' (base.py:2260)
+2025-08-18 15:53:37,862 - ThreadPoolExecutor-2_0 - sqlmesh.core.snapshot.evaluator - INFO - Creating view 'analytics.sqlmesh__staging.staging__stg_product_reviews__3262406446' (evaluator.py:1983)
+2025-08-18 15:53:37,875 - ThreadPoolExecutor-2_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 1b3052d5e6584ca28c793fcd50e747d4 */ CREATE VIEW "sqlmesh__staging"."staging__stg_product_reviews__3262406446" AS
+SELECT
+  "review_id" AS "review_id",
+  "product_id" AS "product_id",
+  "user_id" AS "user_id",
+  "order_id" AS "order_id",
+  "rating" AS "rating",
+  "review_title" AS "review_title",
+  "review_text" AS "review_text",
+  "review_date" AS "review_date",
+  "verified_purchase" AS "verified_purchase",
+  "helpful_votes" AS "helpful_votes",
+  "total_votes" AS "total_votes",
+  "seller_response" AS "seller_response",
+  "response_date" AS "response_date"
+FROM "analytics"."raw"."product_reviews" AS "product_reviews" (base.py:2260)
+2025-08-18 15:53:37,905 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage BackfillStage (evaluator.py:125)
+2025-08-18 15:53:37,907 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage EnvironmentRecordUpdateStage (evaluator.py:125)
+2025-08-18 15:53:37,910 - MainThread - sqlmesh.core.state_sync.db.facade - INFO - Promoting environment 'staging' (facade.py:167)
+2025-08-18 15:53:37,957 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage VirtualLayerUpdateStage (evaluator.py:125)
+2025-08-18 15:53:37,969 - MainThread - sqlmesh.core.snapshot.evaluator - INFO - Creating schema 'analytics.staging__staging' (evaluator.py:1180)
+2025-08-18 15:53:37,971 - MainThread - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 1b3052d5e6584ca28c793fcd50e747d4 */ CREATE SCHEMA IF NOT EXISTS "staging__staging" (base.py:2260)
+2025-08-18 15:53:38,065 - ThreadPoolExecutor-3_0 - sqlmesh.core.snapshot.evaluator - INFO - Updating view 'analytics.staging__staging.stg_product_reviews' to point at table 'analytics.sqlmesh__staging.staging__stg_product_reviews__3262406446' (evaluator.py:1497)
+2025-08-18 15:53:38,067 - ThreadPoolExecutor-3_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 1b3052d5e6584ca28c793fcd50e747d4 */ DROP VIEW IF EXISTS "staging__staging"."stg_product_reviews" CASCADE (base.py:2260)
+2025-08-18 15:53:38,071 - ThreadPoolExecutor-3_0 - sqlmesh.core.engine_adapter.base - INFO - Executing SQL: /* SQLMESH_PLAN: 1b3052d5e6584ca28c793fcd50e747d4 */ CREATE VIEW "staging__staging"."stg_product_reviews" AS
+SELECT
+  *
+FROM "analytics"."sqlmesh__staging"."staging__stg_product_reviews__3262406446" (base.py:2260)
+2025-08-18 15:53:38,093 - MainThread - sqlmesh.core.plan.evaluator - INFO - Evaluating plan stage FinalizeEnvironmentStage (evaluator.py:125)
+2025-08-18 15:53:38,097 - MainThread - sqlmesh.core.state_sync.db.environment - INFO - Finalizing environment 'staging' (environment.py:139)
+2025-08-18 15:53:38,105 - MainThread - root - INFO - Shutting down the event dispatcher (dispatcher.py:159)
