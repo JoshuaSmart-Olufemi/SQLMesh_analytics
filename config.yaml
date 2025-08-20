@@ -1,6 +1,6 @@
 # --- Gateway Connection ---
 gateways:
-  default:
+  postgres:
     type: postgres
     connection: "postgresql://postgres:postgres@172.20.0.1:5432/analytics"
 
