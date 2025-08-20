@@ -3,11 +3,11 @@ gateways:
   postgres:
     connection:
       type: postgres
-      host: ${DB_HOST}
-      user: ${DB_USER}
-      password: ${DB_PASSWORD}
+      host: ${POSTGRES_HOST}
+      user: ${POSTGRES_USER}
+      password: ${POSTGRES_PASSWORD}
       port: 5432
-      database: ${DB_NAME}
+      database: ${POSTGRES_DB}
       concurrent_tasks: 4
       pretty_sql: True
       connect_timeout: 20
