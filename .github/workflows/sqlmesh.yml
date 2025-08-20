@@ -31,10 +31,6 @@ jobs:
       # 3. Install SQLMesh with PostgreSQL support
       - name: Install SQLMesh
         run: pip install "sqlmesh[postgres]"
-
-      # 4. Run SQLMesh Lint (disabled)
-      - name: Run SQLMesh Lint (disabled)
-        run: echo "Skipping lint step"
         
       # 5. Plan for staging
       - name: Run SQLMesh Plan (staging)
