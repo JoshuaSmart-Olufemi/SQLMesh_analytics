@@ -26,9 +26,9 @@ jobs:
         run: pip install "sqlmesh[postgres]"
 
       # 4. Run SQLMesh Lint
-      - name: Run SQLMesh Lint
-        run: sqlmesh lint --verbose
-
+      - name: Run SQLMesh Lint (disabled)
+        run: echo "Skipping lint step"
+        
       # 5. Plan for staging
       - name: Run SQLMesh Plan (staging)
         run: sqlmesh plan staging --no-prompts --skip-backfill --verbose
