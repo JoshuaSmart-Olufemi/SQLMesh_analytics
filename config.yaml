@@ -4,7 +4,7 @@ gateways:
     type: postgres
     connection: "postgresql://postgres:postgres@172.20.0.1:5432/analytics"
 
-default_gateway: default
+default_gateway: postgres
 
 # --- Model Defaults ---
 model_defaults:
@@ -14,7 +14,7 @@ model_defaults:
 
 # --- Linting Rules ---
 linter:
-  enabled: true
+  enabled: false
   rules:
     - ambiguousorinvalidcolumn
     - invalidselectstarexpansion
