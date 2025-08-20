@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     env:  # <-- inject env vars here so config.yaml can resolve them
-      DB_HOST: 2xxaud.stackhero-network.com
+      DB_HOST: ${{ secrets.POSTGRES_HOST }}
       DB_PORT: 5432
       DB_NAME: analytics
-      DB_USER: ${{ secrets.DB_USER }}
-      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+      DB_USER: ${{ secrets.POSTGRES_USER }}
+      DB_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
 
     steps:
       # 1. Checkout the branch to get the latest config.yaml
