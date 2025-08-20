@@ -1,4 +1,4 @@
-name: SQLMesh CI
+name: SQLMesh CI 
 
 on:
   push:
@@ -9,6 +9,13 @@ on:
 jobs:
   sqlmesh:
     runs-on: ubuntu-latest
+
+    env:  # <-- inject env vars here so config.yaml can resolve them
+      DB_HOST: 2xxaud.stackhero-network.com
+      DB_PORT: 5432
+      DB_NAME: analytics
+      DB_USER: ${{ secrets.DB_USER }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
 
     steps:
       # 1. Checkout the branch to get the latest config.yaml
@@ -25,7 +32,7 @@ jobs:
       - name: Install SQLMesh
         run: pip install "sqlmesh[postgres]"
 
-      # 4. Run SQLMesh Lint
+      # 4. Run SQLMesh Lint (disabled)
       - name: Run SQLMesh Lint (disabled)
         run: echo "Skipping lint step"
         
