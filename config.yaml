@@ -1,24 +1,26 @@
+# --- Gateway Connection ---
 gateways:
   postgres:
     connection:
       type: postgres
-      host: 2xxaud.stackhero-network.com
-      user: admin
-      password: GUysEWwFsdX0W9rHJOsXY55SYAnfW346
-      port: 5432
-      database: analytics
+      host: ${DB_HOST}
+      user: ${DB_USER}
+      password: ${DB_PASSWORD}
+      port: ${DB_PORT}
+      database: ${DB_NAME}
       concurrent_tasks: 4
       pretty_sql: True
       connect_timeout: 20
-      sslmode: require
 
 default_gateway: postgres
 
+# --- Model Defaults ---
 model_defaults:
   dialect: postgres
   start: 2025-08-10
-  cron: '@​daily'
+  cron: '@daily'
 
+# --- Linting Rules ---
 linter:
   enabled: true
   rules:
