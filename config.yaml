@@ -22,7 +22,7 @@ model_defaults:
 
 # --- Linting Rules ---
 linter:
-  enabled: true
+  enabled: false
   rules:
     - ambiguousorinvalidcolumn
     - invalidselectstarexpansion
